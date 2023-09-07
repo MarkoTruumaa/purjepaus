@@ -1,6 +1,6 @@
 package com.example.purjepaus.domain.user;
 
-import com.example.purjepaus.business.LoginResponse;
+import com.example.purjepaus.business.dtos.LoginResponse;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)

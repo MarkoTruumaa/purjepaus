@@ -1,5 +1,6 @@
 package com.example.purjepaus.business;
 
+import com.example.purjepaus.business.dtos.LoginResponse;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

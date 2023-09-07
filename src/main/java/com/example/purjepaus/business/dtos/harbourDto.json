@@ -1,0 +1,27 @@
+{
+  "harbourName": "Hara",
+  "contactId": 2,
+  "countyId": 1,
+  "longitude": "",
+  "latitude": "",
+  "minDepth": 2.5,
+  "minWidth": 2.5,
+  "address": "",
+  "phoneNumber": "",
+  "navStart": "",
+  "navEnd": "",
+  "homePage": "",
+  "extras": [
+    {
+      "extraId": 1,
+      "extraName": "toilet",
+      "isAvailable": true
+    },
+    {
+      "extraId": 2,
+      "extraName": "slip",
+      "isAvailable": false
+    }
+  ],
+  "imageData": ""
+}

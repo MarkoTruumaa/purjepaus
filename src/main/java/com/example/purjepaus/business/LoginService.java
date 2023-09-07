@@ -1,5 +1,6 @@
 package com.example.purjepaus.business;
 
+import com.example.purjepaus.business.dtos.LoginResponse;
 import com.example.purjepaus.domain.UserService;
 import com.example.purjepaus.domain.user.User;
 import com.example.purjepaus.domain.user.UserMapper;

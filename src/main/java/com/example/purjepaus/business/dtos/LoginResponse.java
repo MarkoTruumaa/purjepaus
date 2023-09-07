@@ -1,4 +1,4 @@
-package com.example.purjepaus.business;
+package com.example.purjepaus.business.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
