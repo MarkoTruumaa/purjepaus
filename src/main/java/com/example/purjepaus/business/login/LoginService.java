@@ -1,7 +1,7 @@
-package com.example.purjepaus.business;
+package com.example.purjepaus.business.login;
 
 import com.example.purjepaus.business.dtos.LoginResponse;
-import com.example.purjepaus.domain.UserService;
+import com.example.purjepaus.domain.user.UserService;
 import com.example.purjepaus.domain.user.User;
 import com.example.purjepaus.domain.user.UserMapper;
 import jakarta.annotation.Resource;

@@ -16,4 +16,8 @@ public class HarbourService {
     public List<Harbour> getActiveHarboursInfo() {
         return harbourRepository.findHarboursBy(Status.ACTIVE.getLetter());
     }
+
+    public Harbour getHarbourInfoBy(Integer harbourId) {
+        return harbourRepository.getReferenceById(harbourId);
+    }
 }

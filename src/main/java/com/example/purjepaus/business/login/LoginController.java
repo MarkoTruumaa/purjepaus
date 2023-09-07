@@ -1,4 +1,4 @@
-package com.example.purjepaus.business;
+package com.example.purjepaus.business.login;
 
 import com.example.purjepaus.business.dtos.LoginResponse;
 import com.example.purjepaus.infrastructure.error.ApiError;
@@ -18,7 +18,7 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
-    @GetMapping("/sisselogimine")
+    @GetMapping("/login")
     @Operation(summary = "Sisse logimine. Tagastab userId ja roleName",
             description = """
                 Süsteemist otsitakse username ja password abil kasutajat, kelle konto on ka aktiivne.

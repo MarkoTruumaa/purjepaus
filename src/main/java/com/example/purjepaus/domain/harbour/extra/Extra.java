@@ -1,4 +1,4 @@
-package com.example.purjepaus.domain.harbour;
+package com.example.purjepaus.domain.harbour.extra;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

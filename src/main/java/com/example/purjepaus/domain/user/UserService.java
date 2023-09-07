@@ -1,4 +1,4 @@
-package com.example.purjepaus.domain;
+package com.example.purjepaus.domain.user;
 
 import com.example.purjepaus.business.Status;
 import com.example.purjepaus.domain.user.User;
