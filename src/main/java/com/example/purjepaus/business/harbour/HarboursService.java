@@ -1,9 +1,6 @@
 package com.example.purjepaus.business.harbour;
 
-import com.example.purjepaus.business.dtos.ContactInfo;
-import com.example.purjepaus.business.dtos.ExtraInfo;
-import com.example.purjepaus.business.dtos.HarbourDetailedInfo;
-import com.example.purjepaus.business.dtos.HarbourMainInfoDto;
+import com.example.purjepaus.business.dtos.*;
 import com.example.purjepaus.domain.Contact;
 import com.example.purjepaus.domain.ContactMapper;
 import com.example.purjepaus.domain.ContactService;
@@ -13,13 +10,12 @@ import com.example.purjepaus.domain.harbour.Harbour;
 import com.example.purjepaus.domain.harbour.HarbourMapper;
 import com.example.purjepaus.domain.harbour.HarbourService;
 import com.example.purjepaus.domain.harbour.extra.ExtraMapper;
-import com.example.purjepaus.domain.harbour.picture.HarbourPictureService;
+import com.example.purjepaus.domain.harbour.harborpicture.HarbourPictureService;
 import com.example.purjepaus.domain.harbour.picture.Picture;
-import com.example.purjepaus.util.PictureConverter;
+import com.example.purjepaus.domain.harbour.picture.PictureMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,16 +35,18 @@ public class HarboursService {
     private ContactService contactService;
     @Resource
     private ContactMapper contactMapper;
+ @Resource
+    private PictureMapper pictureMapper;
 
 
-    public List<HarbourMainInfoDto> getHarboursInfo() {
+    public List<HarbourMainInfo> getHarboursInfo() {
         List<Harbour> harbours = harbourService.getActiveHarboursInfo();
-        return harbourMapper.toHarbourDtos(harbours);
+        return harbourMapper.toHarboursMainInfo(harbours);
     }
 
     public HarbourDetailedInfo getHarbourInfo(Integer harbourId) {
         Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
-        HarbourDetailedInfo harbourDetailedInfoDto = harbourMapper.toHarbourDetailedInfoDto(harbour);
+        HarbourDetailedInfo harbourDetailedInfoDto = harbourMapper.toHarbourDetailedInfo(harbour);
         findAndSetExtrasToHarbourInfo(harbourId, harbourDetailedInfoDto);
         findAndSetPicturesToHarbourInfo(harbourId, harbourDetailedInfoDto);
 
@@ -63,14 +61,8 @@ public class HarboursService {
 
     private void findAndSetPicturesToHarbourInfo(Integer harbourId, HarbourDetailedInfo harbourDetailedInfoDto) {
         List<Picture> pictures = harbourPictureService.findPicturesBy(harbourId);
-        List<String> picturesData = new ArrayList<>();
-
-        for (Picture picture : pictures) {
-            String pictureData = PictureConverter.pictureToPictureData(picture);
-            picturesData.add(pictureData);
-        }
-
-        harbourDetailedInfoDto.setPictures(picturesData);
+        List<PictureDto> pictureDtos = pictureMapper.toPictureDtos(pictures);
+        harbourDetailedInfoDto.setPictures(pictureDtos);
     }
 
     public ContactInfo getCaptainContactInfo(Integer contactId) {

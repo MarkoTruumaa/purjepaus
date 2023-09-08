@@ -2,7 +2,7 @@ package com.example.purjepaus.business.harbour;
 
 import com.example.purjepaus.business.dtos.ContactInfo;
 import com.example.purjepaus.business.dtos.HarbourDetailedInfo;
-import com.example.purjepaus.business.dtos.HarbourMainInfoDto;
+import com.example.purjepaus.business.dtos.HarbourMainInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class HarboursController {
     @Operation(summary = "Tagastab sadamate põhiinfo(nimi, koordinaadid, miinimum sügavus, miinimum laius, kohtade arv)",
             description = """
                Süsteemist otsitakse välja kõik aktiivsed sadamad""")
-    public List<HarbourMainInfoDto> getHarboursInfo() {
+    public List<HarbourMainInfo> getHarboursInfo() {
        return harboursService.getHarboursInfo();
     }
 

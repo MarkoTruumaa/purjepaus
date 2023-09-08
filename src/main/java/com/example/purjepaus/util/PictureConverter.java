@@ -7,13 +7,13 @@ import java.nio.charset.StandardCharsets;
 public class PictureConverter {
 
     public static Picture pictureDataToPicture(String pictureData) {
-        byte[] bytes = getBytesArrayFromPictureData(pictureData);
+        byte[] bytes = stringToByteArray(pictureData);
         Picture picture = new Picture();
         picture.setPictureData(bytes);
         return picture;
     }
 
-    public static byte[] getBytesArrayFromPictureData(String pictureData) {
+    public static byte[] stringToByteArray(String pictureData) {
         return pictureData.getBytes(StandardCharsets.UTF_8);
     }
 
@@ -21,7 +21,11 @@ public class PictureConverter {
         if (picture == null) {
             return "";
         }
-        return new String(picture.getPictureData(), StandardCharsets.UTF_8);
+        return byteArrayToString(picture.getPictureData());
+    }
+
+    public static String byteArrayToString(byte[] pictureData) {
+        return new String(pictureData, StandardCharsets.UTF_8);
     }
 
 

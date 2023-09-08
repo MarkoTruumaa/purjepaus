@@ -1,7 +1,7 @@
 package com.example.purjepaus.domain.harbour;
 
 import com.example.purjepaus.business.dtos.HarbourDetailedInfo;
-import com.example.purjepaus.business.dtos.HarbourMainInfoDto;
+import com.example.purjepaus.business.dtos.HarbourMainInfo;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -16,9 +16,9 @@ public interface HarbourMapper {
     @Mapping(source = "minDepth", target = "minDepth")
     @Mapping(source = "minWidth", target = "minWidth")
     @Mapping(source = "spots", target = "spots")
-    HarbourMainInfoDto toHarbourDto(Harbour harbour);
+    HarbourMainInfo toHarbourMainInfo(Harbour harbour);
 
-    List<HarbourMainInfoDto> toHarbourDtos(List<Harbour> harbours);
+    List<HarbourMainInfo> toHarboursMainInfo(List<Harbour> harbours);
 
 
     @Mapping(source = "id", target = "harbourId")
@@ -34,7 +34,7 @@ public interface HarbourMapper {
     @Mapping(source = "navigationEnd", target = "navigationEnd")
     @Mapping(source = "navigationStart", target = "navigationStart")
     @Mapping(source = "phoneNumber", target = "phoneNumber")
-    HarbourDetailedInfo toHarbourDetailedInfoDto(Harbour harbour);
+    HarbourDetailedInfo toHarbourDetailedInfo(Harbour harbour);
 
 
 }

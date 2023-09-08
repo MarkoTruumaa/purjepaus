@@ -1,4 +1,4 @@
-package com.example.purjepaus.domain.harbour.picture;
+package com.example.purjepaus.domain.harbour.harborpicture;
 
 import com.example.purjepaus.domain.harbour.Harbour;
 import com.example.purjepaus.domain.harbour.picture.Picture;

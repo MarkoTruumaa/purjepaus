@@ -44,5 +44,5 @@ public class HarbourDetailedInfo implements Serializable {
 
     private List<ExtraInfo> extras;
 
-    private List<String> pictures;
+    private List<PictureDto> pictures;
 }

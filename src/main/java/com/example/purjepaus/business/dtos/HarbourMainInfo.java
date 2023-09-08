@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HarbourMainInfoDto implements Serializable {
+public class HarbourMainInfo implements Serializable {
 
     private Integer harbourId;
 
