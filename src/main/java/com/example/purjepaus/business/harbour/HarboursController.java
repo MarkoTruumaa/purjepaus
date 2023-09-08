@@ -1,5 +1,6 @@
 package com.example.purjepaus.business.harbour;
 
+import com.example.purjepaus.business.dtos.ContactInfo;
 import com.example.purjepaus.business.dtos.HarbourDetailedInfo;
 import com.example.purjepaus.business.dtos.HarbourMainInfoDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +34,7 @@ public class HarboursController {
     }
 
     @GetMapping("/harbour/captain-info")
-    public void getCaptainInfo(@RequestParam Integer contactId) {
-        harboursService.getCaptainInfo(contactId);
+    public ContactInfo getCaptainInfo(@RequestParam Integer contactId) {
+        return harboursService.getCaptainContactInfo(contactId);
     }
 }

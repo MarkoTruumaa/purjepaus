@@ -1,9 +1,11 @@
 package com.example.purjepaus.business.harbour;
 
+import com.example.purjepaus.business.dtos.ContactInfo;
 import com.example.purjepaus.business.dtos.ExtraInfo;
 import com.example.purjepaus.business.dtos.HarbourDetailedInfo;
 import com.example.purjepaus.business.dtos.HarbourMainInfoDto;
 import com.example.purjepaus.domain.Contact;
+import com.example.purjepaus.domain.ContactMapper;
 import com.example.purjepaus.domain.ContactService;
 import com.example.purjepaus.domain.harbour.harbourextra.HarbourExtraService;
 import com.example.purjepaus.domain.harbour.extra.Extra;
@@ -35,8 +37,8 @@ public class HarboursService {
     private HarbourPictureService harbourPictureService;
     @Resource
     private ContactService contactService;
-
-
+    @Resource
+    private ContactMapper contactMapper;
 
 
     public List<HarbourMainInfoDto> getHarboursInfo() {
@@ -71,8 +73,8 @@ public class HarboursService {
         harbourDetailedInfoDto.setPictures(picturesData);
     }
 
-    public void getCaptainInfo(Integer contactId) {
+    public ContactInfo getCaptainContactInfo(Integer contactId) {
         Contact contact = contactService.getContactInfoBy(contactId);
-
+        return contactMapper.toContactInfo(contact);
     }
 }
