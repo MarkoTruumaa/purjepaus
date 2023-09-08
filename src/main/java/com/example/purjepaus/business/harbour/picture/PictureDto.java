@@ -1,4 +1,4 @@
-package com.example.purjepaus.business.dtos;
+package com.example.purjepaus.business.harbour.picture;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package com.example.purjepaus.domain;
 
-import com.example.purjepaus.business.dtos.ContactInfo;
+import com.example.purjepaus.business.user.ContactInfo;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)

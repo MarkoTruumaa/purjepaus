@@ -1,6 +1,6 @@
 package com.example.purjepaus.domain.harbour.picture;
 
-import com.example.purjepaus.business.dtos.PictureDto;
+import com.example.purjepaus.business.harbour.picture.PictureDto;
 import com.example.purjepaus.util.PictureConverter;
 import org.mapstruct.*;
 

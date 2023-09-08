@@ -1,7 +1,7 @@
 package com.example.purjepaus.domain.harbour;
 
-import com.example.purjepaus.business.dtos.HarbourDetailedInfo;
-import com.example.purjepaus.business.dtos.HarbourMainInfo;
+import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
+import com.example.purjepaus.business.harbour.dto.HarbourMainInfo;
 import org.mapstruct.*;
 
 import java.util.List;

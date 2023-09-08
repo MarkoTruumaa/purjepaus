@@ -1,4 +1,4 @@
-package com.example.purjepaus.business.dtos;
+package com.example.purjepaus.business.login.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

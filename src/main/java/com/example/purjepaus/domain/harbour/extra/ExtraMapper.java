@@ -1,6 +1,6 @@
 package com.example.purjepaus.domain.harbour.extra;
 
-import com.example.purjepaus.business.dtos.ExtraInfo;
+import com.example.purjepaus.business.harbour.extra.ExtraInfo;
 import org.mapstruct.*;
 
 import java.util.List;

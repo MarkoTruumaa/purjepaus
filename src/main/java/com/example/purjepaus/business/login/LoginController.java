@@ -1,6 +1,6 @@
 package com.example.purjepaus.business.login;
 
-import com.example.purjepaus.business.dtos.LoginResponse;
+import com.example.purjepaus.business.login.dto.LoginResponse;
 import com.example.purjepaus.infrastructure.error.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

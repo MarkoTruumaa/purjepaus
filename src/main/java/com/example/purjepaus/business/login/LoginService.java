@@ -1,6 +1,6 @@
 package com.example.purjepaus.business.login;
 
-import com.example.purjepaus.business.dtos.LoginResponse;
+import com.example.purjepaus.business.login.dto.LoginResponse;
 import com.example.purjepaus.domain.user.UserService;
 import com.example.purjepaus.domain.user.User;
 import com.example.purjepaus.domain.user.UserMapper;
@@ -17,7 +17,7 @@ public class LoginService {
     private UserMapper userMapper;
 
     public LoginResponse login(String username, String password) {
-        User user = userService.findActiveUserBy(username, password);
+        User user = userService.confirmUsernameAvailability(username, password);
         return userMapper.toLoginResponse(user);
     }
 }

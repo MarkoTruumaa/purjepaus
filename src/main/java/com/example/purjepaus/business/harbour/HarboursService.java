@@ -1,6 +1,10 @@
 package com.example.purjepaus.business.harbour;
 
-import com.example.purjepaus.business.dtos.*;
+import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
+import com.example.purjepaus.business.harbour.dto.HarbourMainInfo;
+import com.example.purjepaus.business.harbour.extra.ExtraInfo;
+import com.example.purjepaus.business.harbour.picture.PictureDto;
+import com.example.purjepaus.business.user.ContactInfo;
 import com.example.purjepaus.domain.Contact;
 import com.example.purjepaus.domain.ContactMapper;
 import com.example.purjepaus.domain.ContactService;

@@ -1,8 +1,8 @@
 package com.example.purjepaus.business.harbour;
 
-import com.example.purjepaus.business.dtos.ContactInfo;
-import com.example.purjepaus.business.dtos.HarbourDetailedInfo;
-import com.example.purjepaus.business.dtos.HarbourMainInfo;
+import com.example.purjepaus.business.user.ContactInfo;
+import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
+import com.example.purjepaus.business.harbour.dto.HarbourMainInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
