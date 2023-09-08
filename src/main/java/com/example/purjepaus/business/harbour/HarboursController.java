@@ -31,4 +31,9 @@ public class HarboursController {
     public HarbourDetailedInfo getHarbourInfo(@RequestParam Integer harbourId) {
         return harboursService.getHarbourInfo(harbourId);
     }
+
+    @GetMapping("/harbour/captain-info")
+    public void getCaptainInfo(@RequestParam Integer contactId) {
+        harboursService.getCaptainInfo(contactId);
+    }
 }
