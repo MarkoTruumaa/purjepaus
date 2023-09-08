@@ -3,15 +3,19 @@ package com.example.purjepaus.business.harbour;
 import com.example.purjepaus.business.dtos.ExtraInfo;
 import com.example.purjepaus.business.dtos.HarbourDetailedInfo;
 import com.example.purjepaus.business.dtos.HarbourMainInfoDto;
-import com.example.purjepaus.domain.HarbourExtraService;
+import com.example.purjepaus.domain.harbour.harbourextra.HarbourExtraService;
 import com.example.purjepaus.domain.harbour.extra.Extra;
 import com.example.purjepaus.domain.harbour.Harbour;
 import com.example.purjepaus.domain.harbour.HarbourMapper;
 import com.example.purjepaus.domain.harbour.HarbourService;
 import com.example.purjepaus.domain.harbour.extra.ExtraMapper;
+import com.example.purjepaus.domain.harbour.picture.HarbourPictureService;
+import com.example.purjepaus.domain.harbour.picture.Picture;
+import com.example.purjepaus.util.PictureConverter;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,6 +29,8 @@ public class HarboursService {
     private ExtraMapper extraMapper;
     @Resource
     private HarbourExtraService harbourExtraService;
+    @Resource
+    private HarbourPictureService harbourPictureService;
 
 
 
@@ -38,12 +44,28 @@ public class HarboursService {
         Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
         HarbourDetailedInfo harbourDetailedInfoDto = harbourMapper.toHarbourDetailedInfoDto(harbour);
 
-        List<Extra> extras = harbourExtraService.findExtrasBy(harbourId);
-        List<ExtraInfo> extraInfos = extraMapper.toExtraInfos(extras);
+        findAndSetExtrasToHarbourInfo(harbourId, harbourDetailedInfoDto);
 
-
-        harbourDetailedInfoDto.setExtras(extraInfos);
+        findAndSetPicturesToHarbourInfo(harbourId, harbourDetailedInfoDto);
 
         return harbourDetailedInfoDto;
+    }
+
+    private void findAndSetExtrasToHarbourInfo(Integer harbourId, HarbourDetailedInfo harbourDetailedInfoDto) {
+        List<Extra> extras = harbourExtraService.findExtrasBy(harbourId);
+        List<ExtraInfo> extraInfos = extraMapper.toExtraInfos(extras);
+        harbourDetailedInfoDto.setExtras(extraInfos);
+    }
+
+    private void findAndSetPicturesToHarbourInfo(Integer harbourId, HarbourDetailedInfo harbourDetailedInfoDto) {
+        List<Picture> pictures = harbourPictureService.findPicturesBy(harbourId);
+        List<String> picturesData = new ArrayList<>();
+
+        for (Picture picture : pictures) {
+            String pictureData = PictureConverter.pictureToPictureData(picture);
+            picturesData.add(pictureData);
+        }
+
+        harbourDetailedInfoDto.setPictures(picturesData);
     }
 }

@@ -43,4 +43,6 @@ public class HarbourDetailedInfo implements Serializable {
     private String phoneNumber;
 
     private List<ExtraInfo> extras;
+
+    private List<String> pictures;
 }

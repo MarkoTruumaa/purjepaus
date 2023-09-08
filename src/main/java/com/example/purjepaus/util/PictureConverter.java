@@ -4,7 +4,7 @@ import com.example.purjepaus.domain.harbour.picture.Picture;
 
 import java.nio.charset.StandardCharsets;
 
-public class pictureConverter {
+public class PictureConverter {
 
     public static Picture pictureDataToPicture(String pictureData) {
         byte[] bytes = getBytesArrayFromPictureData(pictureData);

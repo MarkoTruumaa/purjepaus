@@ -1,6 +1,7 @@
-package com.example.purjepaus.domain;
+package com.example.purjepaus.domain.harbour.harbourextra;
 
 import com.example.purjepaus.domain.harbour.extra.Extra;
+import com.example.purjepaus.domain.harbour.harbourextra.HarbourExtra;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

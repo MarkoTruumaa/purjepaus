@@ -17,7 +17,7 @@ public class HarboursController {
     private HarboursService harboursService;
 
     @GetMapping("/harbours")
-    @Operation(summary = "Tagastab sadamate info(nimi, kordinaadid, miinimum sügavus, miinimum laius, kohtade arv)",
+    @Operation(summary = "Tagastab sadamate põhiinfo(nimi, koordinaadid, miinimum sügavus, miinimum laius, kohtade arv)",
             description = """
                Süsteemist otsitakse välja kõik aktiivsed sadamad""")
     public List<HarbourMainInfoDto> getHarboursInfo() {
@@ -25,6 +25,9 @@ public class HarboursController {
     }
 
     @GetMapping("/harbour")
+    @Operation(summary = "Tagastab ühe sadama detailse/kogu info",
+            description = """
+               Süsteemist otsitakse harbourId põhjal välja kogu info ühe sadama kohta""")
     public HarbourDetailedInfo getHarbourInfo(@RequestParam Integer harbourId) {
         return harboursService.getHarbourInfo(harbourId);
     }
