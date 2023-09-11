@@ -1,6 +1,6 @@
 package com.example.purjepaus.domain.harbour;
 
-import com.example.purjepaus.domain.Contact;
+import com.example.purjepaus.domain.user.contact.Contact;
 import com.example.purjepaus.domain.harbour.location.Location;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

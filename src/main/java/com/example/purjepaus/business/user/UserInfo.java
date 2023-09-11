@@ -14,13 +14,14 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewUserInfo implements Serializable {
+public class UserInfo implements Serializable {
     private String contactFirstName;
     private String contactLastName;
     private String contactEmail;
     private String contactTelephone;
     private String contactAddress;
     private Boolean contactIsCaptain = false;
+    private String roleName;
     @NotNull
     @Size(max = 255)
     private String username;

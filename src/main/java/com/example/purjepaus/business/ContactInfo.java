@@ -1,4 +1,4 @@
-package com.example.purjepaus.business.user;
+package com.example.purjepaus.business;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,13 +9,12 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * DTO for {@link com.example.purjepaus.domain.Contact}
+ * DTO for {@link com.example.purjepaus.domain.user.contact.Contact}
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContactInfo implements Serializable {
-    private Integer contactId;
     @NotNull
     @Size(max = 255)
     private String firstName;

@@ -1,7 +1,6 @@
 package com.example.purjepaus.domain.user;
 
-import com.example.purjepaus.domain.Contact;
-import com.example.purjepaus.domain.user.Role;
+import com.example.purjepaus.domain.user.contact.Contact;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

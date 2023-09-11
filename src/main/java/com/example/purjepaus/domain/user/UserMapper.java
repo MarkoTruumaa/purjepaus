@@ -1,7 +1,7 @@
 package com.example.purjepaus.domain.user;
 
 import com.example.purjepaus.business.login.dto.LoginResponse;
-import com.example.purjepaus.business.user.NewUserInfo;
+import com.example.purjepaus.business.user.UserInfo;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
@@ -19,6 +19,6 @@ public interface UserMapper {
     @Mapping(source = "contactEmail", target = "contact.email")
     @Mapping(source = "contactLastName", target = "contact.lastName")
     @Mapping(source = "contactFirstName", target = "contact.firstName")
-    User toNewUser(NewUserInfo newUserInfo, @MappingTarget User user);
+    User toUser(UserInfo UserInfo, @MappingTarget User user);
 
 }

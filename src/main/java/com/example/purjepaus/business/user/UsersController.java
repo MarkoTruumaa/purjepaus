@@ -10,7 +10,7 @@ public class UsersController {
     private UsersService usersService;
 
     @PostMapping("/user")
-    public void addNewUser(@RequestBody NewUserInfo newUserInfo) {
-        usersService.addNewUser(newUserInfo);
+    public void addNewUser(@RequestBody UserInfo userInfo) {
+        usersService.addNewUser(userInfo);
     }
 }

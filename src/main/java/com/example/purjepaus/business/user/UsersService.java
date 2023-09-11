@@ -1,8 +1,10 @@
 package com.example.purjepaus.business.user;
 
-import com.example.purjepaus.domain.user.User;
+import com.example.purjepaus.domain.user.contact.Contact;
+import com.example.purjepaus.domain.user.contact.ContactMapper;
 import com.example.purjepaus.domain.user.UserMapper;
 import com.example.purjepaus.domain.user.UserService;
+import com.example.purjepaus.domain.user.contact.ContactService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +15,21 @@ public class UsersService {
     private UserService userService;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private ContactMapper contactMapper;
+    @Resource
+    private ContactService contactService;
 
-    public void addNewUser(NewUserInfo newUserInfo) {
-        String username = newUserInfo.getUsername();
+    public void addNewUser(UserInfo userInfo) {
+        String username = userInfo.getUsername();
         userService.confirmUsernameAvailability(username);
-        User user = new User();
-        userMapper.toNewUser(newUserInfo, user);
+
+        Contact contact = contactMapper.toContact(userInfo);
+        contactService.saveContact(contact);
+
+
+
+
 
     }
 }

@@ -1,4 +1,4 @@
-package com.example.purjepaus.domain;
+package com.example.purjepaus.domain.user.contact;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
