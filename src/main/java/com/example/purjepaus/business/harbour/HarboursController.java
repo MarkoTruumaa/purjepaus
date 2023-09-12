@@ -1,6 +1,6 @@
 package com.example.purjepaus.business.harbour;
 
-import com.example.purjepaus.business.ContactInfo;
+import com.example.purjepaus.business.user.dto.ContactInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourMainInfo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,6 +34,9 @@ public class HarboursController {
     }
 
     @GetMapping("/harbour/captain-info")
+    @Operation(summary = "Tagastab kapteni kontaktinfo",
+            description = """
+               Süsteemist otsitakse contactId põhjal välja kapteni kontaktinfo""")
     public ContactInfo getCaptainInfo(@RequestParam Integer contactId) {
         return harboursService.getCaptainContactInfo(contactId);
     }

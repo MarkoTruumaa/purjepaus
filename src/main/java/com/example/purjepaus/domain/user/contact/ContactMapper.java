@@ -1,8 +1,7 @@
 package com.example.purjepaus.domain.user.contact;
 
-import com.example.purjepaus.business.ContactInfo;
-import com.example.purjepaus.business.user.UserInfo;
-import com.example.purjepaus.domain.user.contact.Contact;
+import com.example.purjepaus.business.user.dto.ContactInfo;
+import com.example.purjepaus.business.user.dto.UserInfo;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
