@@ -3,11 +3,14 @@ package com.example.purjepaus.business.harbour;
 import com.example.purjepaus.business.user.dto.ContactInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourMainInfo;
+import com.example.purjepaus.infrastructure.error.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,5 +42,16 @@ public class HarboursController {
                Süsteemist otsitakse contactId põhjal välja kapteni kontaktinfo""")
     public ContactInfo getCaptainInfo(@RequestParam Integer contactId) {
         return harboursService.getCaptainContactInfo(contactId);
+    }
+
+    @PostMapping("/harbour")
+    @Operation(summary = "Uue sadama lisamine süsteemi.",
+            description = "homepage ja picture pole kohustuslikud väljad")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "403", description = "Sellise nimega sadam on süsteemis juba olemas",
+                    content = @Content(schema = @Schema(implementation = ApiError.class)))})
+    public void addNewHarbour(@RequestBody HarbourDetailedInfo harbourDetailedInfo) {
+        harboursService.addNewHarbour(harbourDetailedInfo);
     }
 }

@@ -16,4 +16,8 @@ public class HarbourExtraService {
     public List<Extra> findExtrasBy(Integer harbourId) {
         return harbourExtraRepository.findExtrasBy(harbourId);
     }
+
+    public void saveHarbourExtra(HarbourExtra harbourExtra) {
+        harbourExtraRepository.save(harbourExtra);
+    }
 }

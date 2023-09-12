@@ -18,4 +18,5 @@ public class ContactService {
     public void saveContact(Contact contact) {
         contactRepository.save(contact);
     }
+
 }

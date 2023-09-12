@@ -1,21 +1,20 @@
 package com.example.purjepaus.domain.harbour;
 
+import com.example.purjepaus.business.Status;
 import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourMainInfo;
 import org.mapstruct.*;
 
 import java.util.List;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING,
+        imports = {Status.class})
 public interface HarbourMapper {
 
     @Mapping(source = "id", target = "harbourId")
     @Mapping(source = "name", target = "harbourName")
     @Mapping(source = "location.latitude", target = "locationLatitude")
     @Mapping(source = "location.longitude", target = "locationLongitude")
-    @Mapping(source = "minDepth", target = "minDepth")
-    @Mapping(source = "minWidth", target = "minWidth")
-    @Mapping(source = "spots", target = "spots")
     HarbourMainInfo toHarbourMainInfo(Harbour harbour);
 
     List<HarbourMainInfo> toHarboursMainInfo(List<Harbour> harbours);
@@ -23,18 +22,15 @@ public interface HarbourMapper {
 
     @Mapping(source = "id", target = "harbourId")
     @Mapping(source = "name", target = "harbourName")
-    @Mapping(source = "spots", target = "spots")
     @Mapping(source = "location.longitude", target = "locationLongitude")
     @Mapping(source = "location.latitude", target = "locationLatitude")
-    @Mapping(source = "minWidth", target = "minWidth")
-    @Mapping(source = "minDepth", target = "minDepth")
     @Mapping(source = "contact.id", target = "contactId")
-    @Mapping(source = "homepage", target = "homepage")
+    @Mapping(source = "location.county.name", target = "countyName")
     @Mapping(source = "location.address", target = "locationAddress")
-    @Mapping(source = "navigationEnd", target = "navigationEnd")
-    @Mapping(source = "navigationStart", target = "navigationStart")
-    @Mapping(source = "phoneNumber", target = "phoneNumber")
     HarbourDetailedInfo toHarbourDetailedInfo(Harbour harbour);
 
 
+    @Mapping(source = "harbourName", target = "name")
+    @Mapping(expression = "java(Status.ACTIVE.getLetter())", target = "status")
+    Harbour toHarbour(HarbourDetailedInfo harbourDetailedInfo);
 }

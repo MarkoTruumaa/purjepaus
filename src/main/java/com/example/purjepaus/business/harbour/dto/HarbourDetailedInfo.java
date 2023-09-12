@@ -21,10 +21,17 @@ import java.util.List;
 @NoArgsConstructor
 public class HarbourDetailedInfo implements Serializable {
     private Integer harbourId;
+    @NotNull
+    @Size(max = 255)
     private String locationAddress;
+    @NotNull
     private BigDecimal locationLongitude;
+    @NotNull
     private BigDecimal locationLatitude;
     private Integer contactId;
+    @NotNull
+    @Size(max = 255)
+    private String countyName;
     @NotNull
     @Size(max = 255)
     private String harbourName;

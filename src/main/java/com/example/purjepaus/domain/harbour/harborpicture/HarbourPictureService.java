@@ -15,4 +15,8 @@ public class HarbourPictureService {
     public List<Picture> findPicturesBy(Integer harbourId) {
         return harbourPictureRepository.findPicturesBy(harbourId);
     }
+
+    public void saveHarbourPicture(HarbourPicture harbourPicture) {
+        harbourPictureRepository.save(harbourPicture);
+    }
 }

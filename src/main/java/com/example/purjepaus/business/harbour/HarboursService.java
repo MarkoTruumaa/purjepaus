@@ -5,6 +5,15 @@ import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourMainInfo;
 import com.example.purjepaus.business.harbour.extra.ExtraInfo;
 import com.example.purjepaus.business.harbour.picture.PictureDto;
+import com.example.purjepaus.domain.harbour.extra.ExtraService;
+import com.example.purjepaus.domain.harbour.harborpicture.HarbourPicture;
+import com.example.purjepaus.domain.harbour.harbourextra.HarbourExtra;
+import com.example.purjepaus.domain.harbour.location.Location;
+import com.example.purjepaus.domain.harbour.location.LocationMapper;
+import com.example.purjepaus.domain.harbour.location.LocationService;
+import com.example.purjepaus.domain.harbour.location.county.County;
+import com.example.purjepaus.domain.harbour.location.county.CountyService;
+import com.example.purjepaus.domain.harbour.picture.PictureService;
 import com.example.purjepaus.domain.user.contact.Contact;
 import com.example.purjepaus.domain.user.contact.ContactMapper;
 import com.example.purjepaus.domain.user.contact.ContactService;
@@ -17,6 +26,7 @@ import com.example.purjepaus.domain.harbour.extra.ExtraMapper;
 import com.example.purjepaus.domain.harbour.harborpicture.HarbourPictureService;
 import com.example.purjepaus.domain.harbour.picture.Picture;
 import com.example.purjepaus.domain.harbour.picture.PictureMapper;
+import com.example.purjepaus.util.PictureConverter;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +49,18 @@ public class HarboursService {
     private ContactService contactService;
     @Resource
     private ContactMapper contactMapper;
- @Resource
+    @Resource
     private PictureMapper pictureMapper;
+    @Resource
+    private LocationMapper locationMapper;
+    @Resource
+    private CountyService countyService;
+    @Resource
+    private LocationService locationService;
+    @Resource
+    private ExtraService extraService;
+    @Resource
+    private PictureService pictureService;
 
 
     public List<HarbourMainInfo> getHarboursInfo() {
@@ -72,5 +92,66 @@ public class HarboursService {
     public ContactInfo getCaptainContactInfo(Integer contactId) {
         Contact contact = contactService.getContactInfoBy(contactId);
         return contactMapper.toContactInfo(contact);
+    }
+
+    public void addNewHarbour(HarbourDetailedInfo harbourDetailedInfo) {
+        checkHarbourNameAvailability(harbourDetailedInfo);
+        Location location = createAndSaveLocation(harbourDetailedInfo);
+        Harbour harbour = createAndSaveHarbour(harbourDetailedInfo, location);
+        createAndSaveHarbourExtras(harbourDetailedInfo, harbour);
+        createAndSaveHarbourPicture(harbourDetailedInfo, harbour);
+
+
+    }
+
+    private void checkHarbourNameAvailability(HarbourDetailedInfo harbourDetailedInfo) {
+        String harbourName = harbourDetailedInfo.getHarbourName();
+        harbourService.confirmHarbourNameAvailability(harbourName);
+    }
+
+    private Location createAndSaveLocation(HarbourDetailedInfo harbourDetailedInfo) {
+        County county = countyService.getCountyBy(harbourDetailedInfo.getCountyName());
+
+        Location location = locationMapper.toLocation(harbourDetailedInfo);
+        location.setCounty(county);
+        locationService.saveLocation(location);
+        return location;
+    }
+
+    private Harbour createAndSaveHarbour(HarbourDetailedInfo harbourDetailedInfo, Location location) {
+        Contact contact = contactService.getContactInfoBy(harbourDetailedInfo.getContactId());
+
+        Harbour harbour = harbourMapper.toHarbour(harbourDetailedInfo);
+        harbour.setLocation(location);
+        harbour.setContact(contact);
+        harbourService.saveHarbour(harbour);
+        return harbour;
+    }
+
+    private void createAndSaveHarbourExtras(HarbourDetailedInfo harbourDetailedInfo, Harbour harbour) {
+        HarbourExtra harbourExtra = new HarbourExtra();
+
+        for (ExtraInfo extraInfo : harbourDetailedInfo.getExtras()) {
+            if (extraInfo.getIsAvailable()) {
+                Integer extraId = extraInfo.getExtraId();
+                Extra extra = extraService.getExtraBy(extraId);
+                harbourExtra.setHarbour(harbour);
+                harbourExtra.setExtra(extra);
+                harbourExtraService.saveHarbourExtra(harbourExtra);
+            }
+
+        }
+    }
+
+    private void createAndSaveHarbourPicture(HarbourDetailedInfo harbourDetailedInfo, Harbour harbour) {
+        HarbourPicture harbourPicture = new HarbourPicture();
+
+        for (PictureDto pictureDto : harbourDetailedInfo.getPictures()) {
+            Picture picture = PictureConverter.pictureDataToPicture(pictureDto.getPictureData());
+            pictureService.savePicture(picture);
+            harbourPicture.setHarbor(harbour);
+            harbourPicture.setPicture(picture);
+            harbourPictureService.saveHarbourPicture(harbourPicture);
+        }
     }
 }

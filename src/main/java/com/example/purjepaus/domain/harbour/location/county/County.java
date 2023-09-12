@@ -1,4 +1,4 @@
-package com.example.purjepaus.domain.harbour.location;
+package com.example.purjepaus.domain.harbour.location.county;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

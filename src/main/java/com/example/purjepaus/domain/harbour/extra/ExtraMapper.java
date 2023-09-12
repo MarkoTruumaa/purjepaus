@@ -1,5 +1,6 @@
 package com.example.purjepaus.domain.harbour.extra;
 
+import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
 import com.example.purjepaus.business.harbour.extra.ExtraInfo;
 import org.mapstruct.*;
 
@@ -14,5 +15,6 @@ public interface ExtraMapper {
     ExtraInfo toExtraInfos(Extra extra);
 
    List<ExtraInfo> toExtraInfos(List<Extra> extras);
+
 
 }

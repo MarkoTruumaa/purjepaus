@@ -25,4 +25,12 @@ public class ValidationService {
                     USERNAME_UNAVAILABLE.getErrorCode());
         }
     }
+
+    public static void validateHarbourNameAvailability(boolean harbourNameExists) {
+        if (harbourNameExists) {
+            throw new BusinessException(
+                    HARBOUR_NAME_UNAVAILABLE.getErrorMessage(),
+                    HARBOUR_NAME_UNAVAILABLE.getErrorCode());
+        }
+    }
 }

@@ -6,7 +6,9 @@ import lombok.Getter;
 public enum Error {
 
     INCORRECT_CREDENTIALS("Vale kasutajanimi või parool", 111),
+    HARBOUR_NAME_UNAVAILABLE("Sellise nimega sadam on süsteemis juba olemas", 222),
     USERNAME_UNAVAILABLE("Sellise nimega kasutaja on süsteemis juba olemas", 333)
+
     ;
 
 
