@@ -26,21 +26,28 @@ public class UsersService {
 
 
     public void addNewUser(UserInfo userInfo) {
+        checkUsernameAvailability(userInfo);
+        Contact contact = creatAndSaveContact(userInfo);
+        Role role = roleService.getRoleBy(userInfo.getRoleName());
+        createAndSaveUser(userInfo, contact, role);
+
+    }
+
+    private void checkUsernameAvailability(UserInfo userInfo) {
         String username = userInfo.getUsername();
         userService.confirmUsernameAvailability(username);
+    }
 
+    private Contact creatAndSaveContact(UserInfo userInfo) {
         Contact contact = contactMapper.toContact(userInfo);
-
         contactService.saveContact(contact);
+        return contact;
+    }
 
-        Role role = roleService.getRoleBy(userInfo.getRoleName());
-
+    private void createAndSaveUser(UserInfo userInfo, Contact contact, Role role) {
         User user = userMapper.toUser(userInfo);
         user.setContact(contact);
         user.setRole(role);
-
         userService.saveUser(user);
-
-
     }
 }
