@@ -28,6 +28,7 @@ import com.example.purjepaus.domain.harbour.picture.Picture;
 import com.example.purjepaus.domain.harbour.picture.PictureMapper;
 import com.example.purjepaus.util.PictureConverter;
 import jakarta.annotation.Resource;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -94,6 +95,7 @@ public class HarboursService {
         return contactMapper.toContactInfo(contact);
     }
 
+    @Transactional
     public void addNewHarbour(HarbourDetailedInfo harbourDetailedInfo) {
         checkHarbourNameAvailability(harbourDetailedInfo);
         Location location = createAndSaveLocation(harbourDetailedInfo);
@@ -153,5 +155,10 @@ public class HarboursService {
             harbourPicture.setPicture(picture);
             harbourPictureService.saveHarbourPicture(harbourPicture);
         }
+    }
+
+    public List<ExtraInfo> getHarbourExtras() {
+        List<Extra> extras = extraService.getExtras();
+        return extraMapper.toExtraInfos(extras);
     }
 }

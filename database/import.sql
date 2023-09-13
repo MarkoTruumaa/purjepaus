@@ -3,15 +3,15 @@ INSERT INTO public.county (id, name) VALUES (DEFAULT, 'Saare ');
 INSERT INTO public.county (id, name) VALUES (DEFAULT, 'Hiiu');
 INSERT INTO public.county (id, name) VALUES (DEFAULT, 'Pärnu');
 
-INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'shower');
-INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'toilet');
-INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'water');
-INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'electricity');
-INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'sauna');
+INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'duss');
+INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'WC');
+INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'vesi');
+INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'elekter');
+INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'saun');
 INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'slip');
-INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'playground');
-INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'toilet_access');
-INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'shower_access');
+INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'mänguväljak');
+INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'ratastooliga ligipääsetav WC');
+INSERT INTO public.extra (id, name) VALUES (DEFAULT, 'ratastooliga ligipääsetav duss');
 
 
 INSERT INTO public.contact (id, first_name, last_name, email, telephone, address, is_captain) VALUES (DEFAULT, 'Tarvi', 'Velström', 'tarvi.velström@mail.ee', '+3725021000', 'Kuusalu vald, Hara küla', true);

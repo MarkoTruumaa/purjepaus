@@ -1,6 +1,7 @@
 package com.example.purjepaus.business.user;
 
 import com.example.purjepaus.business.user.dto.UserInfo;
+import com.example.purjepaus.business.user.dto.UserInfoUpdate;
 import com.example.purjepaus.domain.user.role.RoleService;
 import com.example.purjepaus.domain.user.*;
 import com.example.purjepaus.domain.user.contact.Contact;
@@ -49,5 +50,10 @@ public class UsersService {
         user.setContact(contact);
         user.setRole(role);
         userService.saveUser(user);
+    }
+
+    public void updateUserInfo(UserInfoUpdate userInfoUpdate) {
+        User user = userService.getUserBy(userInfoUpdate.getUserId());
+        user.setUsername(userInfoUpdate.getUsername());
     }
 }

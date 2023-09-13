@@ -1,5 +1,6 @@
 package com.example.purjepaus.business.harbour;
 
+import com.example.purjepaus.business.harbour.extra.ExtraInfo;
 import com.example.purjepaus.business.user.dto.ContactInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourMainInfo;
@@ -42,6 +43,14 @@ public class HarboursController {
                Süsteemist otsitakse contactId põhjal välja kapteni kontaktinfo""")
     public ContactInfo getCaptainInfo(@RequestParam Integer contactId) {
         return harboursService.getCaptainContactInfo(contactId);
+    }
+
+    @GetMapping("/harbour/extras")
+    @Operation(
+            summary = "Leiab süsteemist (andmebaasist extra tabelist) kõik teenused.",
+            description = "Tagastab info koos extrayId, extraName-i ja boolean isAvailable'iga")
+    public List<ExtraInfo> getHarbourExtras() {
+       return harboursService.getHarbourExtras();
     }
 
     @PostMapping("/harbour")
