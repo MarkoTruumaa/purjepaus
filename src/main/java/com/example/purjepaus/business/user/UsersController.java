@@ -32,6 +32,7 @@ public class UsersController {
     }
 
     @PutMapping("/user")
+    @Operation(summary = "Muudab kasutaja andmeid süsteemis")
     public void updateUserInfo(@RequestBody UserInfoUpdate userInfoUpdate) {
         usersService.updateUserInfo(userInfoUpdate);
     }
