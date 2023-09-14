@@ -30,12 +30,13 @@ public class UsersController {
 
     @GetMapping("/user")
     @Operation(summary = "Leiab userId abil kasutaja profiili andmed")
-    public UserInfo updateUserInfo(@RequestParam Integer userId) {
-        return null;
+    public UserInfo getUserInfo(@RequestParam Integer userId) {
+        return usersService.getUserInfo(userId);
     }
 
     @PatchMapping("/user")
-    @Operation(summary = "Muudab osaliselt kasutaja andmeid süsteemis")
+    @Operation(summary = "Muudab osaliselt kasutaja andmeid süsteemis",
+            description = "Ei muuda kasutaja username-i, passwordi, statust ja role-i")
     public void updateUserInfo(@RequestParam Integer userId, @RequestBody UserInfo userInfo) {
         usersService.updateUserInfo(userId, userInfo);
     }

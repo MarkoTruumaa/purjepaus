@@ -3,6 +3,7 @@ package com.example.purjepaus.domain.user;
 import com.example.purjepaus.business.Status;
 import com.example.purjepaus.business.login.dto.LoginResponse;
 import com.example.purjepaus.business.user.dto.NewUser;
+import com.example.purjepaus.business.user.dto.UserInfo;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING,
@@ -15,6 +16,13 @@ public interface UserMapper {
 
 
     @Mapping(expression = "java(Status.ACTIVE.getLetter())", target = "status")
-    User toUser(NewUser NewUser);
+    User toUser(NewUser newUser);
+
+    @Mapping(source = "contact.firstName", target = "contactFirstName")
+    @Mapping(source = "contact.lastName", target = "contactLastName")
+    @Mapping(source = "contact.email", target = "contactEmail")
+    @Mapping(source = "contact.telephone", target = "contactTelephone")
+    @Mapping(source = "contact.address", target = "contactAddress")
+    UserInfo toUserInfo(User user);
 
 }

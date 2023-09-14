@@ -3,6 +3,7 @@ package com.example.purjepaus.domain.harbour;
 import com.example.purjepaus.business.Status;
 import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourMainInfo;
+import com.example.purjepaus.business.harbour.dto.UpdateHarbourAndExtras;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -33,4 +34,9 @@ public interface HarbourMapper {
     @Mapping(source = "harbourName", target = "name")
     @Mapping(expression = "java(Status.ACTIVE.getLetter())", target = "status")
     Harbour toHarbour(HarbourDetailedInfo harbourDetailedInfo);
+
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "harbourName", target = "name")
+    Harbour partialUpdate(UpdateHarbourAndExtras updateHarbourAndExtras, @MappingTarget Harbour harbour);
 }

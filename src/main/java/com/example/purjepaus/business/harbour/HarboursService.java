@@ -1,5 +1,6 @@
 package com.example.purjepaus.business.harbour;
 
+import com.example.purjepaus.business.harbour.dto.UpdateHarbourAndExtras;
 import com.example.purjepaus.business.user.dto.ContactInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourMainInfo;
@@ -160,5 +161,45 @@ public class HarboursService {
     public List<ExtraInfo> getHarbourExtras() {
         List<Extra> extras = extraService.getExtras();
         return extraMapper.toExtraInfos(extras);
+    }
+
+    public void updateHarbourInfo(Integer harbourId, UpdateHarbourAndExtras request) {
+        Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
+        Integer requestContactId = request.getContactId();
+        handleContactUpdate(requestContactId, harbour);
+        handleLocationUpdate(request, harbour);
+
+        harbourMapper.partialUpdate(request, harbour);
+        harbourService.saveHarbour(harbour);
+    }
+
+    private void handleContactUpdate(Integer requestContactId, Harbour harbour) {
+        if (!haveSameContactId(harbour, requestContactId)) {
+            Contact contact = contactService.getContactInfoBy(requestContactId);
+            harbour.setContact(contact);
+        }
+    }
+
+    private static boolean haveSameContactId(Harbour harbour, Integer requestContactId) {
+        return harbour.getContact().getId().equals(requestContactId);
+    }
+
+    private void handleLocationUpdate(UpdateHarbourAndExtras request, Harbour harbour) {
+        Location location = harbour.getLocation();
+        Integer requestCountyId = request.getLocationCountyId();
+        updateCounty(location, requestCountyId);
+        locationMapper.partialUpdate(request, location);
+        locationService.saveLocation(location);
+    }
+
+    private void updateCounty(Location location, Integer requestCountyId) {
+        if (!haveSameCountyId(location, requestCountyId)) {
+            County county = countyService.getCountyBy(requestCountyId);
+            location.setCounty(county);
+        }
+    }
+
+    private static boolean haveSameCountyId(Location location, Integer requestCountyId) {
+        return location.getCounty().getId().equals(requestCountyId);
     }
 }

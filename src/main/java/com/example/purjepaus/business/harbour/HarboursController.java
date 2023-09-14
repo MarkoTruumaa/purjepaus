@@ -1,5 +1,6 @@
 package com.example.purjepaus.business.harbour;
 
+import com.example.purjepaus.business.harbour.dto.UpdateHarbourAndExtras;
 import com.example.purjepaus.business.harbour.extra.ExtraInfo;
 import com.example.purjepaus.business.user.dto.ContactInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
@@ -62,5 +63,10 @@ public class HarboursController {
                     content = @Content(schema = @Schema(implementation = ApiError.class)))})
     public void addNewHarbour(@RequestBody HarbourDetailedInfo harbourDetailedInfo) {
         harboursService.addNewHarbour(harbourDetailedInfo);
+    }
+
+    @PutMapping("/harbour")
+    public void updateHarbourInfo(@RequestParam Integer harbourId, @RequestBody UpdateHarbourAndExtras request) {
+        harboursService.updateHarbourInfo(harbourId, request);
     }
 }

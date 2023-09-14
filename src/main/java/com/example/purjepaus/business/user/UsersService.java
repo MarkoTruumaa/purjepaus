@@ -9,7 +9,6 @@ import com.example.purjepaus.domain.user.contact.ContactMapper;
 import com.example.purjepaus.domain.user.contact.ContactService;
 import com.example.purjepaus.domain.user.role.Role;
 import jakarta.annotation.Resource;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -53,14 +52,15 @@ public class UsersService {
         userService.saveUser(user);
     }
 
-    @Transactional
     public void updateUserInfo(Integer userId, UserInfo userInfo) {
         User user = userService.getUserBy(userId);
-        user.setUsername(userInfo.getUsername());
-        userService.saveUser(user);
-
         Contact contact = user.getContact();
         contactMapper.partialUpdate(userInfo, contact);
         contactService.saveContact(contact);
+    }
+
+    public UserInfo getUserInfo(Integer userId) {
+        User user = userService.getUserBy(userId);
+        return userMapper.toUserInfo(user);
     }
 }
