@@ -61,6 +61,7 @@ CREATE TABLE harbour_extra (
     id serial  NOT NULL,
     extra_id int  NOT NULL,
     harbour_id int  NOT NULL,
+    is_available boolean NOT NULL,
     CONSTRAINT harbour_extra_pk PRIMARY KEY (id)
 );
 

@@ -1,5 +1,7 @@
 package com.example.purjepaus.business.harbour.dto;
 
+import com.example.purjepaus.business.harbour.extra.ExtraInfo;
+import com.example.purjepaus.business.harbour.picture.PictureDto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * DTO for {@link com.example.purjepaus.domain.harbour.Harbour}
@@ -47,4 +50,8 @@ public class UpdateHarbourAndExtras implements Serializable {
     @NotNull
     @Size(max = 255)
     private String phoneNumber;
+
+    private List<ExtraInfo> extras;
+
+    private List<PictureDto> pictures;
 }

@@ -66,8 +66,8 @@ public class HarboursController {
     }
 
     @PutMapping("/harbour")
-    public void updateHarbourInfo(@RequestParam Integer harbourId, @RequestBody UpdateHarbourAndExtras request) {
-        harboursService.updateHarbourInfo(harbourId, request);
+    public void updateHarbourInfo(@RequestParam Integer harbourId, @RequestBody UpdateHarbourAndExtras updatedInfo) {
+        harboursService.updateHarbourInfo(harbourId, updatedInfo);
     }
 
     @DeleteMapping("/harbour")

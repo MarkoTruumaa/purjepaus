@@ -1,6 +1,5 @@
 package com.example.purjepaus.business.harbour;
 
-import com.example.purjepaus.business.Status;
 import com.example.purjepaus.business.harbour.dto.UpdateHarbourAndExtras;
 import com.example.purjepaus.business.user.dto.ContactInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
@@ -143,6 +142,7 @@ public class HarboursService {
                 Extra extra = extraService.getExtraBy(extraId);
                 harbourExtra.setHarbour(harbour);
                 harbourExtra.setExtra(extra);
+                harbourExtra.setIsAvailable(extraInfo.getIsAvailable());
                 harbourExtraService.saveHarbourExtra(harbourExtra);
             }
 
@@ -166,13 +166,14 @@ public class HarboursService {
         return extraMapper.toExtraInfos(extras);
     }
 
-    public void updateHarbourInfo(Integer harbourId, UpdateHarbourAndExtras request) {
+    @Transactional
+    public void updateHarbourInfo(Integer harbourId, UpdateHarbourAndExtras updatedInfo) {
         Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
-        Integer requestContactId = request.getContactId();
+        Integer requestContactId = updatedInfo.getContactId();
         handleContactUpdate(requestContactId, harbour);
-        handleLocationUpdate(request, harbour);
-        handleHarbourUpdate(request, harbour);
-
+        handleLocationUpdate(updatedInfo, harbour);
+        handleHarbourUpdate(updatedInfo, harbour);
+        handleHarbourExtrasUpdate(harbourId, updatedInfo);
     }
 
     private void handleContactUpdate(Integer requestContactId, Harbour harbour) {
@@ -186,11 +187,11 @@ public class HarboursService {
         return harbour.getContact().getId().equals(requestContactId);
     }
 
-    private void handleLocationUpdate(UpdateHarbourAndExtras request, Harbour harbour) {
+    private void handleLocationUpdate(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
         Location location = harbour.getLocation();
-        Integer requestCountyId = request.getLocationCountyId();
+        Integer requestCountyId = updatedInfo.getLocationCountyId();
         updateCounty(location, requestCountyId);
-        locationMapper.partialUpdate(request, location);
+        locationMapper.partialUpdate(updatedInfo, location);
         locationService.saveLocation(location);
     }
 
@@ -205,9 +206,23 @@ public class HarboursService {
         return location.getCounty().getId().equals(requestCountyId);
     }
 
-    private void handleHarbourUpdate(UpdateHarbourAndExtras request, Harbour harbour) {
-        harbourMapper.partialUpdate(request, harbour);
+    private void handleHarbourUpdate(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
+        harbourMapper.partialUpdate(updatedInfo, harbour);
         harbourService.saveHarbour(harbour);
+    }
+
+    private void handleHarbourExtrasUpdate(Integer harbourId, UpdateHarbourAndExtras updatedInfo) {
+        for (ExtraInfo updatedInfoExtra : updatedInfo.getExtras()) {
+            HarbourExtra harbourExtra = harbourExtraService.findHarbourExtraBy(harbourId, updatedInfoExtra.getExtraId());
+            if (isAvailableValuesAreDifferent(updatedInfoExtra, harbourExtra)) {
+                harbourExtra.setIsAvailable(updatedInfoExtra.getIsAvailable());
+                harbourExtraService.saveHarbourExtra(harbourExtra);
+            }
+        }
+    }
+
+    private static boolean isAvailableValuesAreDifferent(ExtraInfo updatedInfoExtra, HarbourExtra harbourExtra) {
+        return !updatedInfoExtra.getIsAvailable().equals(harbourExtra.getIsAvailable());
     }
 
     public void deleteHarbour(Integer harbourId) {

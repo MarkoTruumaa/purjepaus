@@ -27,4 +27,8 @@ public class HarbourExtra {
     @JoinColumn(name = "harbour_id", nullable = false)
     private Harbour harbour;
 
+    @NotNull
+    @Column(name = "is_available", nullable = false)
+    private Boolean isAvailable = false;
+
 }

@@ -50,10 +50,11 @@ INSERT INTO public.vessel (id, user_id, name, length, width, draft, status, coun
 INSERT INTO public.vessel (id, user_id, name, length, width, draft, status, country) VALUES (DEFAULT, 2, 'Laine', 8.40, 1.80, 1.40, 'A', 'SE');
 INSERT INTO public.vessel (id, user_id, name, length, width, draft, status, country) VALUES (DEFAULT, 3, 'Kraken', 12.00, 2.50, 1.90, 'A', 'FI');
 
-INSERT INTO public.harbour_extra (id, extra_id, harbour_id) VALUES (DEFAULT, 2, 1);
-INSERT INTO public.harbour_extra (id, extra_id, harbour_id) VALUES (DEFAULT, 3, 1);
-INSERT INTO public.harbour_extra (id, extra_id, harbour_id) VALUES (DEFAULT, 4, 1);
-INSERT INTO public.harbour_extra (id, extra_id, harbour_id) VALUES (DEFAULT, 1, 2);
-INSERT INTO public.harbour_extra (id, extra_id, harbour_id) VALUES (DEFAULT, 2, 2);
-INSERT INTO public.harbour_extra (id, extra_id, harbour_id) VALUES (DEFAULT, 3, 2);
-INSERT INTO public.harbour_extra (id, extra_id, harbour_id) VALUES (DEFAULT, 4, 2);
+INSERT INTO public.harbour_extra (id, extra_id, harbour_id, is_available) VALUES (DEFAULT, 2, 1, true);
+INSERT INTO public.harbour_extra (id, extra_id, harbour_id, is_available) VALUES (DEFAULT, 3, 1, true);
+INSERT INTO public.harbour_extra (id, extra_id, harbour_id, is_available) VALUES (DEFAULT, 4, 1, true);
+INSERT INTO public.harbour_extra (id, extra_id, harbour_id, is_available) VALUES (DEFAULT, 1, 2, true);
+INSERT INTO public.harbour_extra (id, extra_id, harbour_id, is_available) VALUES (DEFAULT, 2, 2, true);
+INSERT INTO public.harbour_extra (id, extra_id, harbour_id, is_available) VALUES (DEFAULT, 3, 2, true);
+INSERT INTO public.harbour_extra (id, extra_id, harbour_id, is_available) VALUES (DEFAULT, 4, 2, true);
+
