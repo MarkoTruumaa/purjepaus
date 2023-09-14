@@ -1,7 +1,7 @@
 package com.example.purjepaus.business.user;
 
+import com.example.purjepaus.business.user.dto.NewUser;
 import com.example.purjepaus.business.user.dto.UserInfo;
-import com.example.purjepaus.business.user.dto.UserInfoUpdate;
 import com.example.purjepaus.domain.user.role.RoleService;
 import com.example.purjepaus.domain.user.*;
 import com.example.purjepaus.domain.user.contact.Contact;
@@ -27,41 +27,40 @@ public class UsersService {
     private RoleService roleService;
 
 
-    public void addNewUser(UserInfo userInfo) {
-        checkUsernameAvailability(userInfo);
-        Contact contact = creatAndSaveContact(userInfo);
-        Role role = roleService.getRoleBy(userInfo.getRoleName());
-        createAndSaveUser(userInfo, contact, role);
+    public void addNewUser(NewUser newUser) {
+        checkUsernameAvailability(newUser);
+        Contact contact = creatAndSaveContact(newUser);
+        Role role = roleService.getRoleBy(newUser.getRoleName());
+        createAndSaveUser(newUser, contact, role);
 
     }
 
-    private void checkUsernameAvailability(UserInfo userInfo) {
-        String username = userInfo.getUsername();
+    private void checkUsernameAvailability(NewUser newUser) {
+        String username = newUser.getUsername();
         userService.confirmUsernameAvailability(username);
     }
 
-    private Contact creatAndSaveContact(UserInfo userInfo) {
-        Contact contact = contactMapper.toContact(userInfo);
+    private Contact creatAndSaveContact(NewUser newUser) {
+        Contact contact = contactMapper.toContact(newUser);
         contactService.saveContact(contact);
         return contact;
     }
 
-    private void createAndSaveUser(UserInfo userInfo, Contact contact, Role role) {
-        User user = userMapper.toUser(userInfo);
+    private void createAndSaveUser(NewUser newUser, Contact contact, Role role) {
+        User user = userMapper.toUser(newUser);
         user.setContact(contact);
         user.setRole(role);
         userService.saveUser(user);
     }
 
     @Transactional
-    public void updateUserInfo(UserInfoUpdate userInfoUpdate) {
-        User user = userService.getUserBy(userInfoUpdate.getUserId());
-        user.setUsername(userInfoUpdate.getUsername());
+    public void updateUserInfo(Integer userId, UserInfo userInfo) {
+        User user = userService.getUserBy(userId);
+        user.setUsername(userInfo.getUsername());
         userService.saveUser(user);
 
-        Integer contactId = user.getContact().getId();
-        Contact contact = contactService.getContactInfoBy(contactId);
-        contactMapper.partialUpdate(userInfoUpdate, contact);
+        Contact contact = user.getContact();
+        contactMapper.partialUpdate(userInfo, contact);
         contactService.saveContact(contact);
     }
 }

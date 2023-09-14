@@ -14,14 +14,16 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInfoUpdate implements Serializable {
+public class NewUser implements Serializable {
 
-
-    @NotNull
-    private Integer userId;
     @NotNull
     @Size(max = 255)
     private String username;
+    @NotNull
+    @Size(max = 255)
+    private String password;
+    @NotNull
+    private String roleName;
     @NotNull
     @Size(max = 255)
     private String contactFirstName;
@@ -35,4 +37,6 @@ public class UserInfoUpdate implements Serializable {
     private String contactTelephone;
     @Size(max = 255)
     private String contactAddress;
+    @NotNull
+    private Boolean contactIsCaptain = false;
 }
