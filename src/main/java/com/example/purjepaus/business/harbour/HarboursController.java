@@ -25,15 +25,15 @@ public class HarboursController {
     @GetMapping("/harbours")
     @Operation(summary = "Tagastab sadamate põhiinfo(nimi, koordinaadid, miinimum sügavus, miinimum laius, kohtade arv)",
             description = """
-               Süsteemist otsitakse välja kõik aktiivsed sadamad""")
+                    Süsteemist otsitakse välja kõik aktiivsed sadamad""")
     public List<HarbourMainInfo> getHarboursInfo() {
-       return harboursService.getHarboursInfo();
+        return harboursService.getHarboursInfo();
     }
 
     @GetMapping("/harbour")
     @Operation(summary = "Tagastab ühe sadama detailse/kogu info",
             description = """
-               Süsteemist otsitakse harbourId põhjal välja kogu info ühe sadama kohta""")
+                    Süsteemist otsitakse harbourId põhjal välja kogu info ühe sadama kohta""")
     public HarbourDetailedInfo getHarbourInfo(@RequestParam Integer harbourId) {
         return harboursService.getHarbourInfo(harbourId);
     }
@@ -41,7 +41,7 @@ public class HarboursController {
     @GetMapping("/harbour/captain-info")
     @Operation(summary = "Tagastab kapteni kontaktinfo",
             description = """
-               Süsteemist otsitakse contactId põhjal välja kapteni kontaktinfo""")
+                    Süsteemist otsitakse contactId põhjal välja kapteni kontaktinfo""")
     public ContactInfo getCaptainInfo(@RequestParam Integer contactId) {
         return harboursService.getCaptainContactInfo(contactId);
     }
@@ -51,7 +51,7 @@ public class HarboursController {
             summary = "Leiab süsteemist (andmebaasist extra tabelist) kõik teenused.",
             description = "Tagastab info koos extrayId, extraName-i ja boolean isAvailable'iga")
     public List<ExtraInfo> getHarbourExtras() {
-       return harboursService.getHarbourExtras();
+        return harboursService.getHarbourExtras();
     }
 
     @PostMapping("/harbour")
@@ -68,5 +68,12 @@ public class HarboursController {
     @PutMapping("/harbour")
     public void updateHarbourInfo(@RequestParam Integer harbourId, @RequestBody UpdateHarbourAndExtras request) {
         harboursService.updateHarbourInfo(harbourId, request);
+    }
+
+    @DeleteMapping("/harbour")
+    @Operation(summary = "Eemaldab sadama info",
+            description = "Muudab ära sadama staatuse active -> deleted")
+    public void deleteHarbour(@RequestParam Integer harbourId) {
+        harboursService.deleteHarbour(harbourId);
     }
 }

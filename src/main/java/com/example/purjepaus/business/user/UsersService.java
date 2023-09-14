@@ -2,6 +2,7 @@ package com.example.purjepaus.business.user;
 
 import com.example.purjepaus.business.user.dto.NewUser;
 import com.example.purjepaus.business.user.dto.UserInfo;
+import com.example.purjepaus.business.user.dto.UserPassword;
 import com.example.purjepaus.domain.user.role.RoleService;
 import com.example.purjepaus.domain.user.*;
 import com.example.purjepaus.domain.user.contact.Contact;
@@ -62,5 +63,17 @@ public class UsersService {
     public UserInfo getUserInfo(Integer userId) {
         User user = userService.getUserBy(userId);
         return userMapper.toUserInfo(user);
+    }
+
+    public UserPassword getUserPassword(Integer userId) {
+        String password = userService.getPasswordBy(userId);
+        return userMapper.toUserPassword(password);
+
+    }
+
+    public void updateUserPassword(Integer userId, String newPassword) {
+        User user = userService.getUserBy(userId);
+        user.setPassword(newPassword);
+        userService.saveUser(user);
     }
 }
