@@ -168,9 +168,8 @@ public class HarboursService {
         Integer requestContactId = request.getContactId();
         handleContactUpdate(requestContactId, harbour);
         handleLocationUpdate(request, harbour);
+        handleHarbourUpdate(request, harbour);
 
-        harbourMapper.partialUpdate(request, harbour);
-        harbourService.saveHarbour(harbour);
     }
 
     private void handleContactUpdate(Integer requestContactId, Harbour harbour) {
@@ -201,5 +200,10 @@ public class HarboursService {
 
     private static boolean haveSameCountyId(Location location, Integer requestCountyId) {
         return location.getCounty().getId().equals(requestCountyId);
+    }
+
+    private void handleHarbourUpdate(UpdateHarbourAndExtras request, Harbour harbour) {
+        harbourMapper.partialUpdate(request, harbour);
+        harbourService.saveHarbour(harbour);
     }
 }
