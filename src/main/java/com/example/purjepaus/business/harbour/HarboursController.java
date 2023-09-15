@@ -1,5 +1,6 @@
 package com.example.purjepaus.business.harbour;
 
+import com.example.purjepaus.business.harbour.dto.HarbourSearchInfo;
 import com.example.purjepaus.business.harbour.dto.UpdateHarbourAndExtras;
 import com.example.purjepaus.business.harbour.extra.ExtraInfo;
 import com.example.purjepaus.business.user.dto.ContactInfo;
@@ -79,4 +80,8 @@ public class HarboursController {
         harboursService.deleteHarbour(harbourId);
     }
 
+    @PostMapping("/harbours/search")
+    public List<HarbourMainInfo> searchHarbours(@RequestBody HarbourSearchInfo harbourSearchInfo) {
+        return harboursService.searchHarbours(harbourSearchInfo);
+    }
 }

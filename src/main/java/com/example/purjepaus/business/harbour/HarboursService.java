@@ -1,5 +1,6 @@
 package com.example.purjepaus.business.harbour;
 
+import com.example.purjepaus.business.harbour.dto.HarbourSearchInfo;
 import com.example.purjepaus.business.harbour.dto.UpdateHarbourAndExtras;
 import com.example.purjepaus.business.user.dto.ContactInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
@@ -32,6 +33,7 @@ import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -268,5 +270,21 @@ public class HarboursService {
     public void deleteHarbour(Integer harbourId) {
         Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
         harbour.setStatus(DELETED.getLetter());
+    }
+
+    public List<HarbourMainInfo> searchHarbours(HarbourSearchInfo harbourSearchInfo) {
+        List<Integer> searchInfoAvailableExtraIds = getAvailableExtrasIdsFrom(harbourSearchInfo);
+        List<Harbour> harbours = harbourExtraService.findHarboursBy(searchInfoAvailableExtraIds);
+        return harbourMapper.toHarboursMainInfo(harbours);
+    }
+
+    private static List<Integer> getAvailableExtrasIdsFrom(HarbourSearchInfo harbourSearchInfo) {
+        List<Integer> searchInfoAvailableExtraIds = new ArrayList<>();
+        for (ExtraInfo searchInfoExtra : harbourSearchInfo.getExtras()) {
+            if (searchInfoExtra.getIsAvailable()) {
+                searchInfoAvailableExtraIds.add(searchInfoExtra.getExtraId());
+            }
+        }
+        return searchInfoAvailableExtraIds;
     }
 }
