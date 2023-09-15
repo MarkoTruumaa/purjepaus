@@ -2,6 +2,7 @@ package com.example.purjepaus.business.user;
 
 import com.example.purjepaus.business.user.dto.NewUser;
 import com.example.purjepaus.business.user.dto.UserInfo;
+import com.example.purjepaus.business.user.dto.UserPassword;
 import com.example.purjepaus.domain.user.role.RoleService;
 import com.example.purjepaus.domain.user.*;
 import com.example.purjepaus.domain.user.contact.Contact;

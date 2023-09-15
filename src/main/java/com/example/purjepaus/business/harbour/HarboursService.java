@@ -230,6 +230,5 @@ public class HarboursService {
     public void deleteHarbour(Integer harbourId) {
         Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
         harbour.setStatus(DELETED.getLetter());
-
     }
 }

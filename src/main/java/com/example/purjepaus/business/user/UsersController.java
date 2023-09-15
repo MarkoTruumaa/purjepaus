@@ -2,6 +2,7 @@ package com.example.purjepaus.business.user;
 
 import com.example.purjepaus.business.user.dto.NewUser;
 import com.example.purjepaus.business.user.dto.UserInfo;
+import com.example.purjepaus.business.user.dto.UserPassword;
 import com.example.purjepaus.infrastructure.error.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -45,6 +46,7 @@ public class UsersController {
     public UserPassword getUserPassword(@RequestParam Integer userId) {
         return usersService.getUserPassword(userId);
     }
+
     @PatchMapping("/user/password")
     @Operation(summary = "Leiab userId abil kasutaja ja muudab ära tema parooli")
     public void updateUserPassword(@RequestParam Integer userId, String newPassword) {
@@ -52,6 +54,8 @@ public class UsersController {
 
     }
     @DeleteMapping("/user")
+    @Operation(summary = "Eemaldab user info",
+            description = "Muudab ära user staatuse active -> deleted")
     public void deleteUser(@RequestParam Integer userId) {
         usersService.deleteUser(userId);
 
