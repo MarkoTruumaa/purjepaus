@@ -29,4 +29,10 @@ public class UserService {
     public User getUserBy(Integer userId) {
         return userRepository.getReferenceById(userId);
     }
+
+    public String getPasswordBy(Integer userId) {
+        return userRepository.getPasswordBy(userId);
+    }
+
+
 }

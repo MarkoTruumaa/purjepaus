@@ -1,5 +1,6 @@
 package com.example.purjepaus.business.harbour;
 
+import com.example.purjepaus.business.Status;
 import com.example.purjepaus.business.harbour.dto.UpdateHarbourAndExtras;
 import com.example.purjepaus.business.user.dto.ContactInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
@@ -33,6 +34,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.example.purjepaus.business.Status.*;
 
 @Service
 public class HarboursService {
@@ -201,5 +204,12 @@ public class HarboursService {
 
     private static boolean haveSameCountyId(Location location, Integer requestCountyId) {
         return location.getCounty().getId().equals(requestCountyId);
+    }
+
+    public void deleteHarbour(Integer harbourId) {
+        Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
+        harbour.setStatus(DELETED.getLetter());
+        harbourService.saveHarbour(harbour);
+
     }
 }

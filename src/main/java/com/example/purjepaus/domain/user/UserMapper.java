@@ -4,6 +4,7 @@ import com.example.purjepaus.business.Status;
 import com.example.purjepaus.business.login.dto.LoginResponse;
 import com.example.purjepaus.business.user.dto.NewUser;
 import com.example.purjepaus.business.user.dto.UserInfo;
+import com.example.purjepaus.business.user.dto.UserPassword;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING,
@@ -24,5 +25,9 @@ public interface UserMapper {
     @Mapping(source = "contact.telephone", target = "contactTelephone")
     @Mapping(source = "contact.address", target = "contactAddress")
     UserInfo toUserInfo(User user);
+
+
+    UserPassword toUserPassword(String password);
+
 
 }
