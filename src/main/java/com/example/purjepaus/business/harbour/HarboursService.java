@@ -169,14 +169,16 @@ public class HarboursService {
     @Transactional
     public void updateHarbourInfo(Integer harbourId, UpdateHarbourAndExtras updatedInfo) {
         Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
-        Integer requestContactId = updatedInfo.getContactId();
-        handleContactUpdate(requestContactId, harbour);
+        handleContactUpdate(updatedInfo, harbour);
         handleLocationUpdate(updatedInfo, harbour);
         handleHarbourUpdate(updatedInfo, harbour);
         handleHarbourExtrasUpdate(harbourId, updatedInfo);
+
+
     }
 
-    private void handleContactUpdate(Integer requestContactId, Harbour harbour) {
+    private void handleContactUpdate(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
+        Integer requestContactId = updatedInfo.getContactId();
         if (!haveSameContactId(harbour, requestContactId)) {
             Contact contact = contactService.getContactInfoBy(requestContactId);
             harbour.setContact(contact);
