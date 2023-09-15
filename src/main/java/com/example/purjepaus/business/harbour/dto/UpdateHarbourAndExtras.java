@@ -22,6 +22,8 @@ import java.util.List;
 public class UpdateHarbourAndExtras implements Serializable {
 
     @NotNull
+    private Integer harbourId;
+    @NotNull
     private Integer locationCountyId;
     @NotNull
     @Size(max = 255)

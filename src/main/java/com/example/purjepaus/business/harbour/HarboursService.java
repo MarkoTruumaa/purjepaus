@@ -32,6 +32,7 @@ import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.example.purjepaus.business.Status.*;
@@ -172,8 +173,8 @@ public class HarboursService {
         handleContactUpdate(updatedInfo, harbour);
         handleLocationUpdate(updatedInfo, harbour);
         handleHarbourUpdate(updatedInfo, harbour);
-        handleHarbourExtrasUpdate(harbourId, updatedInfo);
-
+        handleHarbourExtrasUpdate(updatedInfo);
+        handleHarbourPictureUpdate(updatedInfo, harbour);
 
     }
 
@@ -191,13 +192,12 @@ public class HarboursService {
 
     private void handleLocationUpdate(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
         Location location = harbour.getLocation();
-        Integer requestCountyId = updatedInfo.getLocationCountyId();
-        updateCounty(location, requestCountyId);
         locationMapper.partialUpdate(updatedInfo, location);
+        updateLocationCounty(location, updatedInfo.getLocationCountyId());
         locationService.saveLocation(location);
     }
 
-    private void updateCounty(Location location, Integer requestCountyId) {
+    private void updateLocationCounty(Location location, Integer requestCountyId) {
         if (!haveSameCountyId(location, requestCountyId)) {
             County county = countyService.getCountyBy(requestCountyId);
             location.setCounty(county);
@@ -213,18 +213,56 @@ public class HarboursService {
         harbourService.saveHarbour(harbour);
     }
 
-    private void handleHarbourExtrasUpdate(Integer harbourId, UpdateHarbourAndExtras updatedInfo) {
+    private void handleHarbourExtrasUpdate(UpdateHarbourAndExtras updatedInfo) {
         for (ExtraInfo updatedInfoExtra : updatedInfo.getExtras()) {
-            HarbourExtra harbourExtra = harbourExtraService.findHarbourExtraBy(harbourId, updatedInfoExtra.getExtraId());
-            if (isAvailableValuesAreDifferent(updatedInfoExtra, harbourExtra)) {
+
+            HarbourExtra harbourExtra = harbourExtraService.findHarbourExtraBy(updatedInfo.getHarbourId(), updatedInfoExtra.getExtraId());
+            if (availabilityHasChanged(updatedInfoExtra, harbourExtra)) {
                 harbourExtra.setIsAvailable(updatedInfoExtra.getIsAvailable());
                 harbourExtraService.saveHarbourExtra(harbourExtra);
             }
         }
     }
 
-    private static boolean isAvailableValuesAreDifferent(ExtraInfo updatedInfoExtra, HarbourExtra harbourExtra) {
+    private static boolean availabilityHasChanged(ExtraInfo updatedInfoExtra, HarbourExtra harbourExtra) {
         return !updatedInfoExtra.getIsAvailable().equals(harbourExtra.getIsAvailable());
+    }
+
+    private void handleHarbourPictureUpdate(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
+        if (!harbourHasPictures(updatedInfo.getPictures())) {
+            return;
+        }
+        updateHarbourPictures(updatedInfo, harbour);
+    }
+
+    private void updateHarbourPictures(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
+        List<Picture> picturesInDatabase = harbourPictureService.findPicturesBy(harbour.getId());
+        for (PictureDto updatedInfoPicture : updatedInfo.getPictures()) {
+            String updatedInfoPictureData = updatedInfoPicture.getPictureData();
+            byte[] updatedInfoPictureByteArray = PictureConverter.stringToByteArray(updatedInfoPictureData);
+            for (Picture databasePicture : picturesInDatabase) {
+                byte[] databasePictureByteArray = databasePicture.getPictureData();
+                if (picturesAreDifferent(databasePictureByteArray, updatedInfoPictureByteArray)) {
+                    createAndSaveHarbourPicture(updatedInfoPictureData, harbour);
+                }
+            }
+        }
+    }
+
+    private static boolean harbourHasPictures(List<PictureDto> pictures) {
+        return !pictures.isEmpty();
+    }
+
+    private static boolean picturesAreDifferent(byte[] databasePictureByteArray, byte[] updatedInfoPictureByteArray) {
+        return !Arrays.equals(updatedInfoPictureByteArray, databasePictureByteArray);
+    }
+
+    private void createAndSaveHarbourPicture(String updatedInfoPictureData, Harbour harbour) {
+        Picture picture = PictureConverter.pictureDataToPicture(updatedInfoPictureData);
+        HarbourPicture harbourPicture = new HarbourPicture();
+        harbourPicture.setHarbor(harbour);
+        harbourPicture.setPicture(picture);
+        harbourPictureService.saveHarbourPicture(harbourPicture);
     }
 
     public void deleteHarbour(Integer harbourId) {
