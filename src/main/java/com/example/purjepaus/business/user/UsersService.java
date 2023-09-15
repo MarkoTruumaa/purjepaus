@@ -2,7 +2,6 @@ package com.example.purjepaus.business.user;
 
 import com.example.purjepaus.business.user.dto.NewUser;
 import com.example.purjepaus.business.user.dto.UserInfo;
-import com.example.purjepaus.business.user.dto.UserPassword;
 import com.example.purjepaus.domain.user.role.RoleService;
 import com.example.purjepaus.domain.user.*;
 import com.example.purjepaus.domain.user.contact.Contact;
@@ -11,6 +10,8 @@ import com.example.purjepaus.domain.user.contact.ContactService;
 import com.example.purjepaus.domain.user.role.Role;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import static com.example.purjepaus.business.Status.DELETED;
 
 @Service
 public class UsersService {
@@ -68,12 +69,18 @@ public class UsersService {
     public UserPassword getUserPassword(Integer userId) {
         String password = userService.getPasswordBy(userId);
         return userMapper.toUserPassword(password);
-
     }
 
     public void updateUserPassword(Integer userId, String newPassword) {
         User user = userService.getUserBy(userId);
         user.setPassword(newPassword);
         userService.saveUser(user);
+    }
+
+    public void deleteUser(Integer userId) {
+        User user = userService.getUserBy(userId);
+        user.setStatus(DELETED.getLetter());
+        userService.saveUser(user);
+
     }
 }

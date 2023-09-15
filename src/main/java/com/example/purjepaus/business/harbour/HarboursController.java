@@ -76,4 +76,9 @@ public class HarboursController {
     public void deleteHarbour(@RequestParam Integer harbourId) {
         harboursService.deleteHarbour(harbourId);
     }
+
+    @DeleteMapping("/harbour")
+    public void deleteHarbour(@RequestParam Integer harbourId) {
+        harboursService.deleteHarbour(harbourId);
+    }
 }
