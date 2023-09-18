@@ -280,8 +280,7 @@ public class HarboursService {
            harbourIds = harbourExtraService.findHarbourIdsBy(searchInfoAvailableExtraIds, countOfExtraIds);
         }
 
-        harbourService.findActiveHarboursBy(harbourIds, harbourSearchInfo);
-        harbourSearchInfo.getLocationCountyName()
+        List<Harbour> harbours = harbourService.findActiveHarboursBy(harbourIds);
 
         return harbourMapper.toHarboursMainInfo(harbours);
     }

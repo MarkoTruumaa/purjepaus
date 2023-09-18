@@ -17,7 +17,7 @@ public interface HarbourRepository extends JpaRepository<Harbour, Integer> {
     @Query("select h from Harbour h where " +
             "h.id in :harbourIds and " +
             "h.status = ?2 order by h.name")
-    List<Harbour> findHarboursBy(List<Integer> harbourIds, String status, HarbourSearchInfo harbourSearchInfo);
+    List<Harbour> findHarboursBy(List<Integer> harbourIds, String status);
 
 
 }

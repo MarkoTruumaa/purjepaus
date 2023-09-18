@@ -1,12 +1,13 @@
 package com.example.purjepaus.domain.harbour;
 
-import com.example.purjepaus.business.Status;
 import com.example.purjepaus.business.harbour.dto.HarbourSearchInfo;
 import com.example.purjepaus.validation.ValidationService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.example.purjepaus.business.Status.*;
 
 @Service
 public class HarbourService {
@@ -16,7 +17,7 @@ public class HarbourService {
 
 
     public List<Harbour> getActiveHarboursInfo() {
-        return harbourRepository.findHarboursBy(Status.ACTIVE.getLetter());
+        return harbourRepository.findHarboursBy(ACTIVE.getLetter());
     }
 
     public Harbour getHarbourInfoBy(Integer harbourId) {
@@ -32,7 +33,7 @@ public class HarbourService {
         harbourRepository.save(harbour);
     }
 
-    public void findActiveHarboursBy(List<Integer> harbourIds,  HarbourSearchInfo harbourSearchInfo) {
-
+    public List<Harbour> findActiveHarboursBy(List<Integer> harbourIds) {
+        return harbourRepository.findHarboursBy(harbourIds, ACTIVE.getLetter());
     }
 }
