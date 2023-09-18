@@ -1,6 +1,7 @@
 package com.example.purjepaus.domain.harbour;
 
 import com.example.purjepaus.business.Status;
+import com.example.purjepaus.business.harbour.dto.HarbourSearchInfo;
 import com.example.purjepaus.validation.ValidationService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,9 @@ public class HarbourService {
 
     public void saveHarbour(Harbour harbour) {
         harbourRepository.save(harbour);
+    }
+
+    public void findActiveHarboursBy(List<Integer> harbourIds,  HarbourSearchInfo harbourSearchInfo) {
+
     }
 }

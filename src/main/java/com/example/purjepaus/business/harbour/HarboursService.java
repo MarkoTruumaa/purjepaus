@@ -274,7 +274,15 @@ public class HarboursService {
 
     public List<HarbourMainInfo> searchHarbours(HarbourSearchInfo harbourSearchInfo) {
         List<Integer> searchInfoAvailableExtraIds = getAvailableExtrasIdsFrom(harbourSearchInfo);
-        List<Harbour> harbours = harbourExtraService.findHarboursBy(searchInfoAvailableExtraIds);
+        List<Integer> harbourIds = new ArrayList<>();
+        if (!searchInfoAvailableExtraIds.isEmpty()) {
+            int countOfExtraIds = searchInfoAvailableExtraIds.size();
+           harbourIds = harbourExtraService.findHarbourIdsBy(searchInfoAvailableExtraIds, countOfExtraIds);
+        }
+
+        harbourService.findActiveHarboursBy(harbourIds, harbourSearchInfo);
+        harbourSearchInfo.getLocationCountyName()
+
         return harbourMapper.toHarboursMainInfo(harbours);
     }
 
