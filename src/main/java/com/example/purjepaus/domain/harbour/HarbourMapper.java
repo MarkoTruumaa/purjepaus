@@ -22,12 +22,11 @@ public interface HarbourMapper {
     List<HarbourMainInfo> toHarboursMainInfo(List<Harbour> harbours);
 
 
-    @Mapping(source = "id", target = "harbourId")
     @Mapping(source = "name", target = "harbourName")
     @Mapping(source = "location.longitude", target = "locationLongitude")
     @Mapping(source = "location.latitude", target = "locationLatitude")
     @Mapping(source = "contact.id", target = "contactId")
-    @Mapping(source = "location.county.name", target = "countyName")
+    @Mapping(source = "location.county.name", target = "locationCountyName")
     @Mapping(source = "location.address", target = "locationAddress")
     HarbourDetailedInfo toHarbourDetailedInfo(Harbour harbour);
 

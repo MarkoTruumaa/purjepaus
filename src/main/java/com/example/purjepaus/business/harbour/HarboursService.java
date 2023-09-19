@@ -122,7 +122,7 @@ public class HarboursService {
     }
 
     private Location createAndSaveLocation(HarbourDetailedInfo harbourDetailedInfo) {
-        County county = countyService.getCountyBy(harbourDetailedInfo.getCountyName());
+        County county = countyService.getCountyBy(harbourDetailedInfo.getLocationCountyName());
 
         Location location = locationMapper.toLocation(harbourDetailedInfo);
         location.setCounty(county);

@@ -21,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HarbourDetailedInfo implements Serializable {
-    private Integer harbourId;
+
     @NotNull
     @Size(max = 255)
     private String locationAddress;
@@ -32,7 +32,7 @@ public class HarbourDetailedInfo implements Serializable {
     private Integer contactId;
     @NotNull
     @Size(max = 255)
-    private String countyName;
+    private String locationCountyName;
     @NotNull
     @Size(max = 255)
     private String harbourName;
