@@ -140,15 +140,12 @@ public class HarboursService {
         HarbourExtra harbourExtra = new HarbourExtra();
 
         for (ExtraInfo extraInfo : harbourDetailedInfo.getExtras()) {
-            if (extraInfo.getIsAvailable()) {
-                Integer extraId = extraInfo.getExtraId();
-                Extra extra = extraService.getExtraBy(extraId);
-                harbourExtra.setHarbour(harbour);
-                harbourExtra.setExtra(extra);
-                harbourExtra.setIsAvailable(extraInfo.getIsAvailable());
-                harbourExtraService.saveHarbourExtra(harbourExtra);
-            }
-
+            Integer extraId = extraInfo.getExtraId();
+            Extra extra = extraService.getExtraBy(extraId);
+            harbourExtra.setHarbour(harbour);
+            harbourExtra.setExtra(extra);
+            harbourExtra.setIsAvailable(extraInfo.getIsAvailable());
+            harbourExtraService.saveHarbourExtra(harbourExtra);
         }
     }
 
