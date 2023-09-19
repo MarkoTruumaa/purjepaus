@@ -1,6 +1,5 @@
 package com.example.purjepaus.domain.harbour.harbourextra;
 
-import com.example.purjepaus.domain.harbour.extra.Extra;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +11,8 @@ public class HarbourExtraService {
     @Resource
     private HarbourExtraRepository harbourExtraRepository;
 
-    public List<Extra> findExtrasBy(Integer harbourId) {
-        return harbourExtraRepository.findExtrasBy(harbourId);
+    public List<HarbourExtra> findExtrasBy(Integer harbourId) {
+        return harbourExtraRepository.findHarbourExtrasBy(harbourId);
     }
 
     public void saveHarbourExtra(HarbourExtra harbourExtra) {

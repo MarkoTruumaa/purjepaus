@@ -1,5 +1,6 @@
 package com.example.purjepaus.business.harbour;
 
+import com.example.purjepaus.business.HarbourExtraInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourSearchInfo;
 import com.example.purjepaus.business.harbour.dto.UpdateHarbourAndExtras;
 import com.example.purjepaus.business.user.dto.ContactInfo;
@@ -10,6 +11,7 @@ import com.example.purjepaus.business.harbour.picture.PictureDto;
 import com.example.purjepaus.domain.harbour.extra.ExtraService;
 import com.example.purjepaus.domain.harbour.harborpicture.HarbourPicture;
 import com.example.purjepaus.domain.harbour.harbourextra.HarbourExtra;
+import com.example.purjepaus.domain.harbour.harbourextra.HarbourExtraMapper;
 import com.example.purjepaus.domain.harbour.location.Location;
 import com.example.purjepaus.domain.harbour.location.LocationMapper;
 import com.example.purjepaus.domain.harbour.location.LocationService;
@@ -68,6 +70,8 @@ public class HarboursService {
     private ExtraService extraService;
     @Resource
     private PictureService pictureService;
+    @Resource
+    private HarbourExtraMapper harbourExtraMapper;
 
 
     public List<HarbourMainInfo> getHarboursInfo() {
@@ -85,8 +89,8 @@ public class HarboursService {
     }
 
     private void findAndSetExtrasToHarbourInfo(Integer harbourId, HarbourDetailedInfo harbourDetailedInfoDto) {
-        List<Extra> extras = harbourExtraService.findExtrasBy(harbourId);
-        List<ExtraInfo> extraInfos = extraMapper.toExtraInfos(extras);
+        List<HarbourExtra> harbourExtras = harbourExtraService.findExtrasBy(harbourId);
+        List<HarbourExtraInfo> extraInfos = harbourExtraMapper.toHarbourExtrasInfo(harbourExtras);
         harbourDetailedInfoDto.setExtras(extraInfos);
     }
 
@@ -139,7 +143,7 @@ public class HarboursService {
     private void createAndSaveHarbourExtras(HarbourDetailedInfo harbourDetailedInfo, Harbour harbour) {
         HarbourExtra harbourExtra = new HarbourExtra();
 
-        for (ExtraInfo extraInfo : harbourDetailedInfo.getExtras()) {
+        for (HarbourExtraInfo extraInfo : harbourDetailedInfo.getExtras()) {
             Integer extraId = extraInfo.getExtraId();
             Extra extra = extraService.getExtraBy(extraId);
             harbourExtra.setHarbour(harbour);

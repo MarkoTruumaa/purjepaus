@@ -1,5 +1,6 @@
 package com.example.purjepaus.business.harbour.dto;
 
+import com.example.purjepaus.business.HarbourExtraInfo;
 import com.example.purjepaus.business.harbour.extra.ExtraInfo;
 import com.example.purjepaus.business.harbour.picture.PictureDto;
 import jakarta.validation.constraints.NotNull;
@@ -51,7 +52,7 @@ public class HarbourDetailedInfo implements Serializable {
     @Size(max = 255)
     private String phoneNumber;
 
-    private List<ExtraInfo> extras;
+    private List<HarbourExtraInfo> extras;
 
     private List<PictureDto> pictures;
 }
