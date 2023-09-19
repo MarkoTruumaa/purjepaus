@@ -69,8 +69,8 @@ public class HarboursController {
     @PutMapping("/harbour")
     @Operation(summary = "Muudab sadama andmeid süsteemis",
             description = "Leiab harbourId abil sadama andmed ja muudab need request body-is oleva info alusel")
-    public void updateHarbourInfo(@RequestParam Integer harbourId, @RequestBody UpdateHarbourAndExtras updatedInfo) {
-        harboursService.updateHarbourInfo(harbourId, updatedInfo);
+    public void updateHarbourInfo(@RequestParam Integer harbourId, @RequestBody HarbourDetailedInfo harbourDetailedInfo) {
+        harboursService.updateHarbourInfo(harbourId, harbourDetailedInfo);
     }
 
     @DeleteMapping("/harbour")

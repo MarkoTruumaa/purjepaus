@@ -171,18 +171,18 @@ public class HarboursService {
     }
 
     @Transactional
-    public void updateHarbourInfo(Integer harbourId, UpdateHarbourAndExtras updatedInfo) {
+    public void updateHarbourInfo(Integer harbourId, HarbourDetailedInfo harbourDetailedInfo) {
         Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
-        handleContactUpdate(updatedInfo, harbour);
-        handleLocationUpdate(updatedInfo, harbour);
-        handleHarbourUpdate(updatedInfo, harbour);
-        handleHarbourExtrasUpdate(updatedInfo, harbour);
-        handleHarbourPictureUpdate(updatedInfo, harbour);
+        handleContactUpdate(harbourDetailedInfo, harbour);
+        handleLocationUpdate(harbourDetailedInfo, harbour);
+        handleHarbourUpdate(harbourDetailedInfo, harbour);
+        handleHarbourExtrasUpdate(harbourDetailedInfo, harbour);
+        handleHarbourPictureUpdate(harbourDetailedInfo, harbour);
 
     }
 
-    private void handleContactUpdate(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
-        Integer requestContactId = updatedInfo.getContactId();
+    private void handleContactUpdate(HarbourDetailedInfo harbourDetailedInfo, Harbour harbour) {
+        Integer requestContactId = harbourDetailedInfo.getContactId();
         if (!haveSameContactId(harbour, requestContactId)) {
             Contact contact = contactService.getContactInfoBy(requestContactId);
             harbour.setContact(contact);
@@ -193,10 +193,10 @@ public class HarboursService {
         return harbour.getContact().getId().equals(requestContactId);
     }
 
-    private void handleLocationUpdate(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
+    private void handleLocationUpdate(HarbourDetailedInfo harbourDetailedInfo, Harbour harbour) {
         Location location = harbour.getLocation();
-        locationMapper.partialUpdate(updatedInfo, location);
-        updateLocationCounty(location, updatedInfo.getLocationCountyName());
+        locationMapper.partialUpdate(harbourDetailedInfo, location);
+        updateLocationCounty(location, harbourDetailedInfo.getLocationCountyName());
         locationService.saveLocation(location);
     }
 
@@ -211,13 +211,13 @@ public class HarboursService {
         return location.getCounty().getName().equals(requestCountyName);
     }
 
-    private void handleHarbourUpdate(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
-        harbourMapper.partialUpdate(updatedInfo, harbour);
+    private void handleHarbourUpdate(HarbourDetailedInfo harbourDetailedInfo, Harbour harbour) {
+        harbourMapper.partialUpdate(harbourDetailedInfo, harbour);
         harbourService.saveHarbour(harbour);
     }
 
-    private void handleHarbourExtrasUpdate(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
-        for (ExtraInfo updatedInfoExtra : updatedInfo.getExtras()) {
+    private void handleHarbourExtrasUpdate(HarbourDetailedInfo harbourDetailedInfo, Harbour harbour) {
+        for (HarbourExtraInfo updatedInfoExtra : harbourDetailedInfo.getExtras()) {
 
             HarbourExtra harbourExtra = harbourExtraService.findHarbourExtraBy(harbour.getId(), updatedInfoExtra.getExtraId());
             if (availabilityHasChanged(updatedInfoExtra, harbourExtra)) {
@@ -227,20 +227,20 @@ public class HarboursService {
         }
     }
 
-    private static boolean availabilityHasChanged(ExtraInfo updatedInfoExtra, HarbourExtra harbourExtra) {
+    private static boolean availabilityHasChanged(HarbourExtraInfo updatedInfoExtra, HarbourExtra harbourExtra) {
         return !updatedInfoExtra.getIsAvailable().equals(harbourExtra.getIsAvailable());
     }
 
-    private void handleHarbourPictureUpdate(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
-        if (!harbourHasPictures(updatedInfo.getPictures())) {
+    private void handleHarbourPictureUpdate(HarbourDetailedInfo harbourDetailedInfo, Harbour harbour) {
+        if (!harbourHasPictures(harbourDetailedInfo.getPictures())) {
             return;
         }
-        updateHarbourPictures(updatedInfo, harbour);
+        updateHarbourPictures(harbourDetailedInfo, harbour);
     }
 
-    private void updateHarbourPictures(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
+    private void updateHarbourPictures(HarbourDetailedInfo harbourDetailedInfo, Harbour harbour) {
         List<Picture> picturesInDatabase = harbourPictureService.findPicturesBy(harbour.getId());
-        for (PictureDto updatedInfoPicture : updatedInfo.getPictures()) {
+        for (PictureDto updatedInfoPicture : harbourDetailedInfo.getPictures()) {
             String updatedInfoPictureData = updatedInfoPicture.getPictureData();
             byte[] updatedInfoPictureByteArray = PictureConverter.stringToByteArray(updatedInfoPictureData);
             for (Picture databasePicture : picturesInDatabase) {

@@ -17,6 +17,6 @@ public interface LocationMapper {
     @Mapping(source = "locationLatitude", target = "latitude")
     @Mapping(source = "locationLongitude", target = "longitude")
     @Mapping(source = "locationAddress", target = "address")
-    Location partialUpdate(UpdateHarbourAndExtras updateHarbourAndExtras, @MappingTarget Location location);
+    Location partialUpdate(HarbourDetailedInfo harbourDetailedInfo, @MappingTarget Location location);
 
 }

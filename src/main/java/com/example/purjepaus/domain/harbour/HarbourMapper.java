@@ -38,6 +38,6 @@ public interface HarbourMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source = "harbourName", target = "name")
-    Harbour partialUpdate(UpdateHarbourAndExtras updateHarbourAndExtras, @MappingTarget Harbour harbour);
+    Harbour partialUpdate(HarbourDetailedInfo harbourDetailedInfo, @MappingTarget Harbour harbour);
 
 }
