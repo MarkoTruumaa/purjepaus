@@ -176,7 +176,7 @@ public class HarboursService {
         handleContactUpdate(updatedInfo, harbour);
         handleLocationUpdate(updatedInfo, harbour);
         handleHarbourUpdate(updatedInfo, harbour);
-        handleHarbourExtrasUpdate(updatedInfo);
+        handleHarbourExtrasUpdate(updatedInfo, harbour);
         handleHarbourPictureUpdate(updatedInfo, harbour);
 
     }
@@ -216,10 +216,10 @@ public class HarboursService {
         harbourService.saveHarbour(harbour);
     }
 
-    private void handleHarbourExtrasUpdate(UpdateHarbourAndExtras updatedInfo) {
+    private void handleHarbourExtrasUpdate(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
         for (ExtraInfo updatedInfoExtra : updatedInfo.getExtras()) {
 
-            HarbourExtra harbourExtra = harbourExtraService.findHarbourExtraBy(updatedInfo.getHarbourId(), updatedInfoExtra.getExtraId());
+            HarbourExtra harbourExtra = harbourExtraService.findHarbourExtraBy(harbour.getId(), updatedInfoExtra.getExtraId());
             if (availabilityHasChanged(updatedInfoExtra, harbourExtra)) {
                 harbourExtra.setIsAvailable(updatedInfoExtra.getIsAvailable());
                 harbourExtraService.saveHarbourExtra(harbourExtra);
