@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
+import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
@@ -15,4 +16,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("select u.password from User u where u.id = ?1")
     String getPasswordBy(Integer userId);
+
+    @Query("select u from User u where u.contact.isCaptain = ?1")
+    List<User> findUserBy(Boolean isCaptain);
+
+
 }

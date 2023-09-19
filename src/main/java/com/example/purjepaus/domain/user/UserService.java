@@ -4,6 +4,8 @@ import com.example.purjepaus.business.Status;
 import com.example.purjepaus.validation.ValidationService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,5 +34,9 @@ public class UserService {
 
     public String getPasswordBy(Integer userId) {
         return userRepository.getPasswordBy(userId);
+    }
+
+    public List<User> getCaptainInfo(Boolean isCaptain) {
+        return userRepository.findUserBy(isCaptain);
     }
 }

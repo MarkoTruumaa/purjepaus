@@ -2,10 +2,13 @@ package com.example.purjepaus.domain.user;
 
 import com.example.purjepaus.business.Status;
 import com.example.purjepaus.business.login.dto.LoginResponse;
+import com.example.purjepaus.business.user.dto.CaptainInfo;
 import com.example.purjepaus.business.user.dto.NewUser;
 import com.example.purjepaus.business.user.dto.UserInfo;
 import com.example.purjepaus.business.user.dto.UserPassword;
 import org.mapstruct.*;
+
+import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING,
         imports = {Status.class})
@@ -28,5 +31,12 @@ public interface UserMapper {
 
 
     UserPassword toUserPassword(String password);
+
+    @Mapping(source = "contact.id", target = "contactId")
+    @Mapping(source = "contact.firstName", target = "contactFirstName")
+    @Mapping(source = "contact.lastName", target = "contactLastName")
+    CaptainInfo toCaptainInfo(User user);
+
+    List<CaptainInfo> toCaptainsInfo(List<User> users);
 
 }

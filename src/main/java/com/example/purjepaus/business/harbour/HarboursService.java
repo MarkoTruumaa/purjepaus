@@ -195,19 +195,19 @@ public class HarboursService {
     private void handleLocationUpdate(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {
         Location location = harbour.getLocation();
         locationMapper.partialUpdate(updatedInfo, location);
-        updateLocationCounty(location, updatedInfo.getLocationCountyId());
+        updateLocationCounty(location, updatedInfo.getLocationCountyName());
         locationService.saveLocation(location);
     }
 
-    private void updateLocationCounty(Location location, Integer requestCountyId) {
-        if (!haveSameCountyId(location, requestCountyId)) {
-            County county = countyService.getCountyBy(requestCountyId);
+    private void updateLocationCounty(Location location, String requestCountyName) {
+        if (!haveSameCountyId(location, requestCountyName)) {
+            County county = countyService.getCountyBy(requestCountyName);
             location.setCounty(county);
         }
     }
 
-    private static boolean haveSameCountyId(Location location, Integer requestCountyId) {
-        return location.getCounty().getId().equals(requestCountyId);
+    private static boolean haveSameCountyId(Location location, String requestCountyName) {
+        return location.getCounty().getName().equals(requestCountyName);
     }
 
     private void handleHarbourUpdate(UpdateHarbourAndExtras updatedInfo, Harbour harbour) {

@@ -24,7 +24,7 @@ public class UpdateHarbourAndExtras implements Serializable {
     @NotNull
     private Integer harbourId;
     @NotNull
-    private Integer locationCountyId;
+    private String locationCountyName;
     @NotNull
     @Size(max = 255)
     private String locationAddress;

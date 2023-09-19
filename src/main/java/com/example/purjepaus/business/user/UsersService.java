@@ -1,5 +1,6 @@
 package com.example.purjepaus.business.user;
 
+import com.example.purjepaus.business.user.dto.CaptainInfo;
 import com.example.purjepaus.business.user.dto.NewUser;
 import com.example.purjepaus.business.user.dto.UserInfo;
 import com.example.purjepaus.business.user.dto.UserPassword;
@@ -11,6 +12,8 @@ import com.example.purjepaus.domain.user.contact.ContactService;
 import com.example.purjepaus.domain.user.role.Role;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static com.example.purjepaus.business.Status.DELETED;
 
@@ -82,6 +85,11 @@ public class UsersService {
         User user = userService.getUserBy(userId);
         user.setStatus(DELETED.getLetter());
         userService.saveUser(user);
+    }
 
+    public List<CaptainInfo> getCaptainInfo() {
+        Boolean isCaptain = true;
+        List<User> captainInfo = userService.getCaptainInfo(isCaptain);
+        return userMapper.toCaptainsInfo(captainInfo);
     }
 }
