@@ -271,6 +271,7 @@ public class HarboursService {
     public void deleteHarbour(Integer harbourId) {
         Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
         harbour.setStatus(DELETED.getLetter());
+        harbourService.saveHarbour(harbour);
     }
 
     public List<HarbourMainInfo> searchHarbours(HarbourSearchInfo harbourSearchInfo) {
