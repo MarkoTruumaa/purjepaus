@@ -2,7 +2,6 @@ package com.example.purjepaus.business.user;
 
 import com.example.purjepaus.business.user.dto.NewUser;
 import com.example.purjepaus.business.user.dto.UserInfo;
-import com.example.purjepaus.business.user.dto.UserPassword;
 import com.example.purjepaus.business.user.dto.CaptainInfo;
 import com.example.purjepaus.infrastructure.error.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,10 +43,12 @@ public class UsersController {
     public void updateUserInfo(@RequestParam Integer userId, @RequestBody UserInfo userInfo) {
         usersService.updateUserInfo(userId, userInfo);
     }
+
     @GetMapping("user/password")
-    @Operation(summary = "Leiab userId abil kasutaja parooli")
-    public UserPassword getUserPassword(@RequestParam Integer userId) {
-        return usersService.getUserPassword(userId);
+    @Operation(summary = "Kontrollib kasutaja parooli ",
+            description = "Kontrollib userId ja passwordi abil, kas antud password on selle useri oma")
+    public void checkUserPassword(@RequestParam Integer userId, String password) {
+        usersService.checkUserPassword(userId, password);
     }
 
     @PatchMapping("/user/password")
@@ -56,6 +57,7 @@ public class UsersController {
         usersService.updateUserPassword(userId, newPassword);
 
     }
+
     @DeleteMapping("/user")
     @Operation(summary = "Eemaldab user info",
             description = "Muudab ära user staatuse active -> deleted")

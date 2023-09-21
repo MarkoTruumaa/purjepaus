@@ -33,4 +33,12 @@ public class ValidationService {
                     HARBOUR_NAME_UNAVAILABLE.getErrorCode());
         }
     }
+
+    public static void validateUserPassword(boolean userExists) {
+        if (!userExists) {
+            throw new BusinessException(
+                    INCORRECT_PASSWORD.getErrorMessage(),
+                    INCORRECT_PASSWORD.getErrorCode());
+        }
+    }
 }

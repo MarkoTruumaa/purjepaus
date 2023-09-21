@@ -1,4 +1,4 @@
-package com.example.purjepaus.business;
+package com.example.purjepaus.business.harbour.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

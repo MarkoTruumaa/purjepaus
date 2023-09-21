@@ -5,7 +5,6 @@ import com.example.purjepaus.business.login.dto.LoginResponse;
 import com.example.purjepaus.business.user.dto.CaptainInfo;
 import com.example.purjepaus.business.user.dto.NewUser;
 import com.example.purjepaus.business.user.dto.UserInfo;
-import com.example.purjepaus.business.user.dto.UserPassword;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -28,9 +27,6 @@ public interface UserMapper {
     @Mapping(source = "contact.telephone", target = "contactTelephone")
     @Mapping(source = "contact.address", target = "contactAddress")
     UserInfo toUserInfo(User user);
-
-
-    UserPassword toUserPassword(String password);
 
     @Mapping(source = "contact.id", target = "contactId")
     @Mapping(source = "contact.firstName", target = "contactFirstName")

@@ -1,7 +1,5 @@
 package com.example.purjepaus.business.harbour.dto;
 
-import com.example.purjepaus.business.HarbourExtraInfo;
-import com.example.purjepaus.business.harbour.extra.ExtraInfo;
 import com.example.purjepaus.business.harbour.picture.PictureDto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

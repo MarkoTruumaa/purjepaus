@@ -32,8 +32,9 @@ public class UserService {
         return userRepository.getReferenceById(userId);
     }
 
-    public String getPasswordBy(Integer userId) {
-        return userRepository.getPasswordBy(userId);
+    public void checkUserBy(Integer userId, String password) {
+        boolean userExists = userRepository.checkUserBy(userId, password);
+        ValidationService.validateUserPassword(userExists);
     }
 
     public List<User> getCaptainInfo(Boolean isCaptain) {

@@ -14,8 +14,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("select (count(u) > 0) from User u where u.username = ?1")
     boolean usernameExistsBy(String username);
 
-    @Query("select u.password from User u where u.id = ?1")
-    String getPasswordBy(Integer userId);
+    @Query("select (count(u) > 0) from User u where u.id = ?1 and u.password = ?2")
+    boolean checkUserBy(Integer userId, String password);
 
     @Query("select u from User u where u.contact.isCaptain = ?1")
     List<User> findUserBy(Boolean isCaptain);
