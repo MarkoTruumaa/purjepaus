@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 public class HarbourSearchInfo implements Serializable {
 
-    private String locationCountyName;
+    private Integer countyId;
 
     private BigDecimal minDepth;
 

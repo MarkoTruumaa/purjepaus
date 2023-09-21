@@ -2,7 +2,6 @@ package com.example.purjepaus.business.harbour;
 
 import com.example.purjepaus.business.HarbourExtraInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourSearchInfo;
-import com.example.purjepaus.business.harbour.dto.UpdateHarbourAndExtras;
 import com.example.purjepaus.business.user.dto.ContactInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourDetailedInfo;
 import com.example.purjepaus.business.harbour.dto.HarbourMainInfo;
@@ -141,9 +140,9 @@ public class HarboursService {
     }
 
     private void createAndSaveHarbourExtras(HarbourDetailedInfo harbourDetailedInfo, Harbour harbour) {
-        HarbourExtra harbourExtra = new HarbourExtra();
 
         for (HarbourExtraInfo extraInfo : harbourDetailedInfo.getExtras()) {
+            HarbourExtra harbourExtra = new HarbourExtra();
             Integer extraId = extraInfo.getExtraId();
             Extra extra = extraService.getExtraBy(extraId);
             harbourExtra.setHarbour(harbour);
@@ -154,9 +153,10 @@ public class HarboursService {
     }
 
     private void createAndSaveHarbourPicture(HarbourDetailedInfo harbourDetailedInfo, Harbour harbour) {
-        HarbourPicture harbourPicture = new HarbourPicture();
+
 
         for (PictureDto pictureDto : harbourDetailedInfo.getPictures()) {
+            HarbourPicture harbourPicture = new HarbourPicture();
             Picture picture = PictureConverter.pictureDataToPicture(pictureDto.getPictureData());
             pictureService.savePicture(picture);
             harbourPicture.setHarbor(harbour);
@@ -275,19 +275,12 @@ public class HarboursService {
     }
 
     public List<HarbourMainInfo> searchHarbours(HarbourSearchInfo harbourSearchInfo) {
-        List<Integer> searchInfoAvailableExtraIds = getAvailableExtrasIdsFrom(harbourSearchInfo);
-        List<Integer> harbourIds = new ArrayList<>();
-        if (!searchInfoAvailableExtraIds.isEmpty()) {
-            int countOfExtraIds = searchInfoAvailableExtraIds.size();
-           harbourIds = harbourExtraService.findHarbourIdsBy(searchInfoAvailableExtraIds, countOfExtraIds);
-        }
-
-        List<Harbour> harbours = harbourService.findActiveHarboursBy(harbourIds);
-
+        List<Integer> requiredExtraIds = getRequiredExtraIds(harbourSearchInfo);
+        List<Harbour> harbours = harbourExtraService.findHarboursBy(requiredExtraIds, harbourSearchInfo);
         return harbourMapper.toHarboursMainInfo(harbours);
     }
 
-    private static List<Integer> getAvailableExtrasIdsFrom(HarbourSearchInfo harbourSearchInfo) {
+    private static List<Integer> getRequiredExtraIds(HarbourSearchInfo harbourSearchInfo) {
         List<Integer> searchInfoAvailableExtraIds = new ArrayList<>();
         for (ExtraInfo searchInfoExtra : harbourSearchInfo.getExtras()) {
             if (searchInfoExtra.getIsAvailable()) {

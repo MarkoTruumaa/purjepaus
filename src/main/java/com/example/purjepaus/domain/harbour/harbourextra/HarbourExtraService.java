@@ -1,5 +1,7 @@
 package com.example.purjepaus.domain.harbour.harbourextra;
 
+import com.example.purjepaus.business.harbour.dto.HarbourSearchInfo;
+import com.example.purjepaus.domain.harbour.Harbour;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,10 @@ public class HarbourExtraService {
         return harbourExtraRepository.findHarbourExtraBy(harbourId, extraId);
     }
 
-    public List<Integer> findHarbourIdsBy(List<Integer> extraIds, int countOfExtraIds) {
-        return harbourExtraRepository.findHarboursIdsByMatching(extraIds, countOfExtraIds);
+    public List<Harbour> findHarboursBy(List<Integer> extraIds, HarbourSearchInfo harbourSearchInfo) {
+        int countOfExtraIds = extraIds.size();
+        return harbourExtraRepository.findHarboursIdsByMatching(
+                extraIds, countOfExtraIds, harbourSearchInfo.getCountyId(),
+                harbourSearchInfo.getMinDepth(), harbourSearchInfo.getMinWidth());
     }
 }
