@@ -87,18 +87,6 @@ public class HarboursService {
         return harbourDetailedInfoDto;
     }
 
-    private void findAndSetExtrasToHarbourInfo(Integer harbourId, HarbourDetailedInfo harbourDetailedInfoDto) {
-        List<HarbourExtra> harbourExtras = harbourExtraService.findExtrasBy(harbourId);
-        List<HarbourExtraInfo> extraInfos = harbourExtraMapper.toHarbourExtrasInfo(harbourExtras);
-        harbourDetailedInfoDto.setExtras(extraInfos);
-    }
-
-    private void findAndSetPicturesToHarbourInfo(Integer harbourId, HarbourDetailedInfo harbourDetailedInfoDto) {
-        List<Picture> pictures = harbourPictureService.findPicturesBy(harbourId);
-        List<PictureDto> pictureDtos = pictureMapper.toPictureDtos(pictures);
-        harbourDetailedInfoDto.setPictures(pictureDtos);
-    }
-
     public ContactInfo getCaptainContactInfo(Integer contactId) {
         Contact contact = contactService.getContactInfoBy(contactId);
         return contactMapper.toContactInfo(contact);
@@ -113,6 +101,46 @@ public class HarboursService {
         createAndSaveHarbourPicture(harbourDetailedInfo, harbour);
 
 
+    }
+
+    public List<ExtraInfo> getHarbourExtras() {
+        List<Extra> extras = extraService.getExtras();
+        return extraMapper.toExtraInfos(extras);
+    }
+
+    @Transactional
+    public void updateHarbourInfo(Integer harbourId, HarbourDetailedInfo harbourDetailedInfo) {
+        Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
+        handleContactUpdate(harbourDetailedInfo, harbour);
+        handleLocationUpdate(harbourDetailedInfo, harbour);
+        handleHarbourUpdate(harbourDetailedInfo, harbour);
+        handleHarbourExtrasUpdate(harbourDetailedInfo, harbour);
+        handleHarbourPictureUpdate(harbourDetailedInfo, harbour);
+
+    }
+
+    public void deleteHarbour(Integer harbourId) {
+        Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
+        harbour.setStatus(DELETED.getLetter());
+        harbourService.saveHarbour(harbour);
+    }
+
+    public List<HarbourMainInfo> searchHarbours(HarbourSearchInfo harbourSearchInfo) {
+        List<Integer> requiredExtraIds = getRequiredExtraIds(harbourSearchInfo);
+        List<Harbour> harbours = harbourExtraService.findHarboursBy(requiredExtraIds, harbourSearchInfo);
+        return harbourMapper.toHarboursMainInfo(harbours);
+    }
+
+    private void findAndSetExtrasToHarbourInfo(Integer harbourId, HarbourDetailedInfo harbourDetailedInfoDto) {
+        List<HarbourExtra> harbourExtras = harbourExtraService.findExtrasBy(harbourId);
+        List<HarbourExtraInfo> extraInfos = harbourExtraMapper.toHarbourExtrasInfo(harbourExtras);
+        harbourDetailedInfoDto.setExtras(extraInfos);
+    }
+
+    private void findAndSetPicturesToHarbourInfo(Integer harbourId, HarbourDetailedInfo harbourDetailedInfoDto) {
+        List<Picture> pictures = harbourPictureService.findPicturesBy(harbourId);
+        List<PictureDto> pictureDtos = pictureMapper.toPictureDtos(pictures);
+        harbourDetailedInfoDto.setPictures(pictureDtos);
     }
 
     private void checkHarbourNameAvailability(HarbourDetailedInfo harbourDetailedInfo) {
@@ -163,22 +191,6 @@ public class HarboursService {
             harbourPicture.setPicture(picture);
             harbourPictureService.saveHarbourPicture(harbourPicture);
         }
-    }
-
-    public List<ExtraInfo> getHarbourExtras() {
-        List<Extra> extras = extraService.getExtras();
-        return extraMapper.toExtraInfos(extras);
-    }
-
-    @Transactional
-    public void updateHarbourInfo(Integer harbourId, HarbourDetailedInfo harbourDetailedInfo) {
-        Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
-        handleContactUpdate(harbourDetailedInfo, harbour);
-        handleLocationUpdate(harbourDetailedInfo, harbour);
-        handleHarbourUpdate(harbourDetailedInfo, harbour);
-        handleHarbourExtrasUpdate(harbourDetailedInfo, harbour);
-        handleHarbourPictureUpdate(harbourDetailedInfo, harbour);
-
     }
 
     private void handleContactUpdate(HarbourDetailedInfo harbourDetailedInfo, Harbour harbour) {
@@ -266,18 +278,6 @@ public class HarboursService {
         harbourPicture.setHarbor(harbour);
         harbourPicture.setPicture(picture);
         harbourPictureService.saveHarbourPicture(harbourPicture);
-    }
-
-    public void deleteHarbour(Integer harbourId) {
-        Harbour harbour = harbourService.getHarbourInfoBy(harbourId);
-        harbour.setStatus(DELETED.getLetter());
-        harbourService.saveHarbour(harbour);
-    }
-
-    public List<HarbourMainInfo> searchHarbours(HarbourSearchInfo harbourSearchInfo) {
-        List<Integer> requiredExtraIds = getRequiredExtraIds(harbourSearchInfo);
-        List<Harbour> harbours = harbourExtraService.findHarboursBy(requiredExtraIds, harbourSearchInfo);
-        return harbourMapper.toHarboursMainInfo(harbours);
     }
 
     private static List<Integer> getRequiredExtraIds(HarbourSearchInfo harbourSearchInfo) {

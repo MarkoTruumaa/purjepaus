@@ -81,6 +81,8 @@ public class HarboursController {
     }
 
     @PostMapping("/harbours/search")
+    @Operation(summary = "Otsin süsteemist sisestatud parameetrite järgi välja sadamad",
+            description = "Otsib süsteemist valitud teenuste, countyName-i, minDetpth ja minWidth järgi välja sadamad")
     public List<HarbourMainInfo> searchHarbours(@RequestBody HarbourSearchInfo harbourSearchInfo) {
         return harboursService.searchHarbours(harbourSearchInfo);
     }

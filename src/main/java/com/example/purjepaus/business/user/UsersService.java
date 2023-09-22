@@ -39,24 +39,6 @@ public class UsersService {
 
     }
 
-    private void checkUsernameAvailability(NewUser newUser) {
-        String username = newUser.getUsername();
-        userService.confirmUsernameAvailability(username);
-    }
-
-    private Contact creatAndSaveContact(NewUser newUser) {
-        Contact contact = contactMapper.toContact(newUser);
-        contactService.saveContact(contact);
-        return contact;
-    }
-
-    private void createAndSaveUser(NewUser newUser, Contact contact, Role role) {
-        User user = userMapper.toUser(newUser);
-        user.setContact(contact);
-        user.setRole(role);
-        userService.saveUser(user);
-    }
-
     public void updateUserInfo(Integer userId, UserInfo userInfo) {
         User user = userService.getUserBy(userId);
         Contact contact = user.getContact();
@@ -90,4 +72,23 @@ public class UsersService {
         List<User> captainInfo = userService.getCaptainInfo(isCaptain);
         return userMapper.toCaptainsInfo(captainInfo);
     }
+
+    private void checkUsernameAvailability(NewUser newUser) {
+        String username = newUser.getUsername();
+        userService.confirmUsernameAvailability(username);
+    }
+
+    private Contact creatAndSaveContact(NewUser newUser) {
+        Contact contact = contactMapper.toContact(newUser);
+        contactService.saveContact(contact);
+        return contact;
+    }
+
+    private void createAndSaveUser(NewUser newUser, Contact contact, Role role) {
+        User user = userMapper.toUser(newUser);
+        user.setContact(contact);
+        user.setRole(role);
+        userService.saveUser(user);
+    }
+
 }
