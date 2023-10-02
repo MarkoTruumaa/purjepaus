@@ -14,6 +14,13 @@ public interface HarbourExtraRepository extends JpaRepository<HarbourExtra, Inte
     @Query("select h from HarbourExtra h where h.harbour.id = ?1 and h.extra.id = ?2")
     HarbourExtra findHarbourExtraBy(Integer harbourId, Integer extraId);
 
-    @Query("SELECT he.harbour FROM HarbourExtra he WHERE he.extra.id IN :extraIds AND he.isAvailable = true  AND (he.harbour.location.county.id = :countyId or :countyId = 0) AND he.harbour.minDepth >= :minDepth AND he.harbour.minWidth >= :minWidth GROUP BY he.harbour HAVING COUNT(DISTINCT he.extra.id) = :count")
+    @Query("SELECT he.harbour FROM HarbourExtra he " +
+            "WHERE (NULLIF(:count, 0) IS NULL OR he.extra.id IN :extraIds) " +
+            "AND he.isAvailable = true  " +
+            "AND (he.harbour.location.county.id = :countyId or :countyId = 0) " +
+            "AND he.harbour.minDepth >= :minDepth " +
+            "AND he.harbour.minWidth >= :minWidth " +
+            "GROUP BY he.harbour " +
+            "HAVING NULLIF(:count, 0) IS NULL OR COUNT(DISTINCT he.extra.id) = :count")
     List<Harbour> findHarboursIdsByMatching(List<Integer> extraIds, int count, Integer countyId, BigDecimal minDepth, BigDecimal minWidth);
 }
